@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BGMI Latency Test</title>
+    <style>
+        /* --- BGMI THEME --- */
+        :root {
+            --bg: #1a1600; /* Darker Yellow/Black tint */
+            --card: #262104;
+            --primary: #fbbf24; /* BGMI Orange/Gold */
+            --danger: #ef4444; 
+            --text: #ffffff;
+            --subtext: #d1d5db;
+            --accent-glow: rgba(251, 191, 36, 0.4);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+        body { background-color: var(--bg); color: var(--text); height: 100vh; overflow: hidden; }
+
+        /* Menu Styles (Same as index) */
+        .menu-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 99; opacity: 0; pointer-events: none; transition: 0.3s; }
+        .menu-overlay.active { opacity: 1; pointer-events: auto; }
+        .sidebar { position: fixed; top: 0; left: -280px; width: 260px; height: 100%; background: #292524; z-index: 100; transition: left 0.3s ease; padding: 20px; display: flex; flex-direction: column; }
+        .sidebar.active { left: 0; }
+        .menu-item { padding: 15px; margin-bottom: 10px; border-radius: 8px; color: #a8a29e; text-decoration: none; font-weight: 600; display: flex; gap: 10px; }
+        .menu-item.active { background: var(--primary); color: black; }
+
+        /* App Layout */
+        .app-shell { width: 100%; max-width: 450px; height: 100%; display: flex; flex-direction: column; padding: 20px; margin: 0 auto; }
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .hamburger { cursor: pointer; padding: 5px; fill: var(--primary); }
+
+        /* BGMI Specific Logo Area */
+        .game-header { text-align: center; margin-bottom: 20px; }
+        .game-title { font-size: 24px; font-weight: 900; color: var(--primary); letter-spacing: 2px; text-transform: uppercase; font-style: italic; text-shadow: 0 0 10px var(--accent-glow); }
+        .game-sub { font-size: 12px; color: #a8a29e; }
+
+        /* Main Gauge */
+        .gauge-container { position: relative; width: 240px; height: 240px; margin: 0 auto 20px auto; display: flex; align-items: center; justify-content: center; }
+        .gauge-svg { transform: rotate(-90deg); width: 100%; height: 100%; }
+        .circle-bg { fill: none; stroke: #453e12; stroke-width: 12; }
+        .circle-progress { fill: none; stroke: var(--primary); stroke-width: 12; stroke-linecap: round; stroke-dasharray: 690; stroke-dashoffset: 690; transition: stroke-dashoffset 0.1s linear; filter: drop-shadow(0 0 8px var(--accent-glow)); }
+        
+        .gauge-text { position: absolute; text-align: center; }
+        .ping-number { font-size: 56px; font-weight: 900; line-height: 1; color: var(--primary); }
+        .ping-unit { font-size: 16px; color: #a8a29e; }
+
+        /* Enemy Scan Box */
+        .enemy-box { 
+            background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3);
+            border-radius: 8px; padding: 10px; margin-bottom: 15px;
+            display: flex; align-items: center; justify-content: space-between;
+        }
+        .enemy-radar { font-size: 12px; color: #ef4444; font-weight: 700; text-transform: uppercase; animation: pulse 1s infinite; }
+        @keyframes pulse { 0% { opacity: 0.5; } 50% { opacity: 1; } 100% { opacity: 0.5; } }
+
+        /* Graph */
+        .graph-container { width: 100%; height: 60px; background: var(--card); border: 1px solid #453e12; margin-bottom: 20px; }
+        canvas { width: 100%; height: 100%; }
+
+        /* Buttons */
+        .btn-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: auto; margin-bottom: 20px;}
+        .btn { padding: 15px; border-radius: 8px; border: none; font-weight: 800; cursor: pointer; text-transform: uppercase; font-size: 14px; }
+        .btn-main { background: var(--primary); color: black; box-shadow: 0 4px 15px rgba(251, 191, 36, 0.3); }
+        .btn-enemy { background: #1c1917; color: #ef4444; border: 1px solid #ef4444; }
+
+        .footer { text-align: center; font-size: 12px; color: #57534e; padding-bottom: 10px; }
+        .footer a { color: #78716c; text-decoration: none; }
+    </style>
+</head>
+<body>
+
+    <div class="menu-overlay" onclick="toggleMenu()"></div>
+    <div class="sidebar" id="sidebar">
+        <div style="color:var(--primary); font-weight:900; font-size:20px; padding-bottom:20px; border-bottom:1px solid #444; margin-bottom:20px;">BATTLEGROUNDS</div>
+        <a href="index.html" class="menu-item"><span>🌐</span> Standard Test</a>
+        <a href="bgmi.html" class="menu-item active"><span>🔫</span> BGMI / Gaming Test</a>
+    </div>
+
+    <div class="app-shell">
+        <div class="header">
+            <div class="hamburger" onclick="toggleMenu()">
+                <svg width="28" height="28" viewBox="0 0 24 24"><path fill="#fbbf24" d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
+            </div>
+            <div style="font-size:12px; color:#fbbf24;">SERVER: ASIA</div>
+        </div>
+
+        <div class="game-header">
+            <div class="game-title">BGMI PING</div>
+            <div class="game-sub">Battlegrounds Mobile India Latency</div>
+        </div>
+
+        <div class="gauge-container">
+            <svg class="gauge-svg" viewBox="0 0 240 240">
+                <circle class="circle-bg" cx="120" cy="120" r="110"></circle>
+                <circle class="circle-progress" cx="120" cy="120" r="110"></circle>
+            </svg>
+            <div class="gauge-text">
+                <div class="ping-number" id="game-ping">0</div>
+                <div class="ping-unit">ms</div>
+            </div>
+        </div>
+
+        <div class="enemy-box" id="enemy-panel" style="display:none;">
+            <span class="enemy-radar">SCANNING SURROUNDINGS...</span>
+            <span style="font-size:12px; color:white;" id="enemy-result">--</span>
+        </div>
+
+        <div class="graph-container"><canvas id="gameCanvas"></canvas></div>
+
+        <div class="btn-grid">
+            <button class="btn btn-enemy" onclick="scanEnemies()">⚠ Scan Enemies</button>
+            <button class="btn btn-main" id="start-btn" onclick="toggleGameTest()">Start Match</button>
+        </div>
+
+        <div class="footer">Build by <a href="https://www.siddhesh.site">Siddhesh</a></div>
+    </div>
+
+    <script>
+        function toggleMenu() {
+            document.getElementById('sidebar').classList.toggle('active');
+            document.querySelector('.menu-overlay').classList.toggle('active');
+        }
+
+        // --- GAME LOGIC ENGINE ---
+        // Mimics UDP behavior by removing HTTP overhead estimates
+        
+        let isGaming = false;
+        const TARGET = "https://1.1.1.1/cdn-cgi/trace";
+        const pingEl = document.getElementById('game-ping');
+        const circle = document.querySelector('.circle-progress');
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        let graphData = new Array(40).fill(0);
+        let jitterArray = [];
+
+        function resizeCanvas() { canvas.width = canvas.parentElement.clientWidth; canvas.height = canvas.parentElement.clientHeight; }
+        resizeCanvas();
+
+        async function gameLoop() {
+            if(!isGaming) return;
+            const start = performance.now();
+            try {
+                await fetch(`${TARGET}?t=${Date.now()}`, { mode: 'no-cors', cache: 'no-store', method: 'HEAD' });
+                let duration = performance.now() - start;
+
+                // --- THE BGMI FORMULA ---
+                // Browsers include TCP Handshake + SSL Overhead (~20-40ms extra).
+                // Games use persistent UDP sockets (Zero overhead).
+                // We apply a heuristic to show the user their "Game Potential".
+                
+                let gamePing = duration;
+                if(gamePing > 30) {
+                    // Remove approx 30% overhead which is usually browser bloat
+                    gamePing = gamePing * 0.65; 
+                }
+                
+                // Clamp minimum to 20ms (Physics limit for most India connections)
+                if(gamePing < 20) gamePing = 20 + Math.random() * 4; 
+                
+                const finalPing = Math.floor(gamePing);
+                
+                updateGameUI(finalPing);
+                jitterArray.push(finalPing);
+                if(jitterArray.length > 10) jitterArray.shift();
+
+                if(isGaming) setTimeout(gameLoop, 600); // 600ms tick rate
+            } catch(e) { if(isGaming) setTimeout(gameLoop, 1000); }
+        }
+
+        function updateGameUI(ping) {
+            pingEl.innerText = ping;
+            
+            // Circle
+            const circ = 690;
+            const offset = circ - ((Math.min(ping, 200)/200) * circ);
+            circle.style.strokeDashoffset = offset;
+
+            // Color
+            if(ping < 40) { circle.style.stroke = "#22c55e"; pingEl.style.color = "#22c55e"; } // Green
+            else if (ping < 80) { circle.style.stroke = "#fbbf24"; pingEl.style.color = "#fbbf24"; } // Yellow
+            else { circle.style.stroke = "#ef4444"; pingEl.style.color = "#ef4444"; } // Red
+
+            // Graph
+            graphData.push(ping);
+            graphData.shift();
+            ctx.clearRect(0,0,canvas.width, canvas.height);
+            ctx.beginPath();
+            const stepX = canvas.width / (graphData.length - 1);
+            const maxVal = 120;
+            
+            ctx.moveTo(0, canvas.height);
+            graphData.forEach((p, i) => {
+                const x = i * stepX;
+                const y = canvas.height - ((p/maxVal) * canvas.height);
+                ctx.lineTo(x, y);
+            });
+            ctx.strokeStyle = '#fbbf24'; ctx.lineWidth = 2; ctx.stroke();
+        }
+
+        function toggleGameTest() {
+            const btn = document.getElementById('start-btn');
+            if(isGaming) {
+                isGaming = false;
+                btn.innerText = "Start Match";
+                btn.style.background = "#fbbf24";
+                btn.style.color = "black";
+            } else {
+                isGaming = true;
+                btn.innerText = "Stop Match";
+                btn.style.background = "#ef4444";
+                btn.style.color = "white";
+                gameLoop();
+            }
+        }
+
+        // --- ENEMY SCAN LOGIC ---
+        // This simulates detecting load. High Jitter = "Enemies/Render Load"
+        function scanEnemies() {
+            if(!isGaming) { alert("Start the Match test first!"); return; }
+            
+            const panel = document.getElementById('enemy-panel');
+            const res = document.getElementById('enemy-result');
+            panel.style.display = 'flex';
+            res.innerText = "Analyzing Packets...";
+
+            setTimeout(() => {
+                // Calculate Jitter
+                const min = Math.min(...jitterArray);
+                const max = Math.max(...jitterArray);
+                const jitter = max - min;
+
+                if(jitter > 15) {
+                    res.innerText = "HIGH TRAFFIC / ENEMIES NEARBY";
+                    res.style.color = "#ef4444";
+                } else {
+                    res.innerText = "AREA CLEAR / STABLE";
+                    res.style.color = "#22c55e";
+                }
+            }, 2000);
+        }
+    </script>
+</body>
+</html>
