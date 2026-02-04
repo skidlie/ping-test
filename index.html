@@ -5,140 +5,208 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>QA Engine - Enterprise Automation</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    
     <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/skidlie/ping-test/main/Screenshot%202026-01-12%20005809.png">
 
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-D3Z8DNJLVF"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-D3Z8DNJLVF"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
-
         gtag('config', 'G-D3Z8DNJLVF');
     </script> 
 
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'Inter', sans-serif;
+            background-color: #0f141e; /* Deep dark background from design */
         }
-
-        .hero-gradient {
-            background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
+        
+        /* Custom Utilities matching the React Design */
+        .text-gradient-logo {
+            background: linear-gradient(to right, #ffffff, #9ca3af);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
-
-        .text-gradient {
-            background: linear-gradient(to right, #60A5FA, #A78BFA);
+        
+        .text-gradient-hero {
+            background: linear-gradient(to right, #60A5FA, #A855F7);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
     </style>
 </head>
 
-<body class="bg-slate-900 text-white min-h-screen">
+<body class="text-white min-h-screen">
 
-    <!-- Navbar -->
-    <nav class="border-b border-gray-800 backdrop-blur-md fixed w-full top-0 z-50">
+    <nav class="border-b border-gray-800 backdrop-blur-md fixed w-full top-0 z-50 bg-[#0f141e]/80">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
-                <div class="flex items-center">
-                    <span class="text-2xl font-bold text-white">QA Engine</span>
-                </div>
-                <div class="hidden md:block">
-                    <div class="ml-10 flex items-baseline space-x-4">
-                        <a href="/login" class="px-4 py-2 text-gray-300 hover:text-white transition-colors">Login</a>
-                        <a href="/register"
-                            class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-medium transition-all">Get
-                            Started</a>
+                <div class="flex items-center gap-2">
+                    <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center font-bold text-xl text-white">
+                        Q
                     </div>
+                    <span class="text-xl font-bold text-gradient-logo">
+                        QA Engine
+                    </span>
+                </div>
+
+                <div class="hidden md:flex items-center gap-6">
+                    <a href="https://app.qaengine.in/login" class="text-gray-300 hover:text-white transition-colors text-sm font-medium">
+                        Login
+                    </a>
+                    <a href="https://app.qaengine.in/register"
+                        class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-bold transition-all flex items-center gap-2 group">
+                        Get Started 
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="transition-transform group-hover:translate-x-1"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                    </a>
                 </div>
             </div>
         </div>
     </nav>
 
-    <!-- Hero Section -->
-    <div class="hero-gradient pt-32 pb-20 px-4 sm:px-6 lg:px-8">
+    <div class="pt-32 pb-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-blue-900/10 to-transparent">
         <div class="max-w-7xl mx-auto text-center">
             <h1 class="text-5xl md:text-7xl font-extrabold tracking-tight mb-8">
-                The Future of <span class="text-gradient">Automation Testing</span>
+                The Future of <span class="text-gradient-hero">Automation Testing</span>
             </h1>
-            <p class="mt-4 max-w-2xl mx-auto text-xl text-gray-400">
-                Record browser interactions, generate Playwright scripts, and automate your QA workflow in minutes. No
-                coding required.
+            <p class="mt-4 max-w-2xl mx-auto text-xl text-gray-400 leading-relaxed">
+                Record browser interactions, generate Playwright scripts, and automate your QA workflow in minutes.
+                <span class="block text-white font-medium mt-2">Zero coding required.</span>
             </p>
-            <div class="mt-10 flex justify-center gap-4">
-                <a href="/login"
+            <div class="mt-10 flex flex-col sm:flex-row justify-center gap-4">
+                <a href="https://app.qaengine.in/register"
                     class="px-8 py-4 bg-blue-600 hover:bg-blue-700 rounded-xl text-lg font-bold shadow-lg shadow-blue-500/20 transition-all hover:scale-105">
-                    Start Testing Now
+                    Start Free Trial
                 </a>
                 <a href="#features"
-                    class="px-8 py-4 bg-slate-800 hover:bg-slate-700 border border-slate-700 rounded-xl text-lg font-medium transition-all">
+                    class="px-8 py-4 bg-purple-600 hover:bg-purple-700 rounded-xl text-lg font-bold shadow-lg shadow-purple-500/20 transition-all hover:scale-105">
                     View Features
+                </a>
+                <a href="#how-to-use"
+                    class="px-8 py-4 bg-[#1f2937] hover:bg-[#374151] border border-gray-700 rounded-xl text-lg font-medium transition-all">
+                    How it Works
                 </a>
             </div>
         </div>
     </div>
 
-    <!-- Features -->
-    <div id="features" class="py-20 bg-slate-950">
+    <div class="border-y border-gray-800 bg-[#111827]/50">
+        <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+            <div>
+                <div class="text-3xl font-bold text-white mb-1">10k+</div>
+                <div class="text-sm text-gray-400">Active Users</div>
+            </div>
+            <div>
+                <div class="text-3xl font-bold text-white mb-1">1M+</div>
+                <div class="text-sm text-gray-400">Tests Run</div>
+            </div>
+            <div>
+                <div class="text-3xl font-bold text-white mb-1">99.9%</div>
+                <div class="text-sm text-gray-400">Uptime</div>
+            </div>
+            <div>
+                <div class="text-3xl font-bold text-white mb-1">24/7</div>
+                <div class="text-sm text-gray-400">Support</div>
+            </div>
+        </div>
+    </div>
+
+    <div id="features" class="py-24 bg-[#0f141e]">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold mb-4">Why QA Engine?</h2>
+                <p class="text-gray-400">Everything you need to ship confident code.</p>
+            </div>
+
             <div class="grid md:grid-cols-3 gap-8">
-                <!-- Feature 1 -->
-                <div
-                    class="p-8 bg-slate-900 rounded-2xl border border-slate-800 hover:border-blue-500/50 transition-colors">
-                    <div class="w-12 h-12 bg-blue-500/10 rounded-lg flex items-center justify-center mb-6">
-                        <svg class="w-6 h-6 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                        </svg>
+                <div class="p-8 rounded-2xl border transition-all duration-300 group hover:-translate-y-1 bg-[#1f2937] bg-yellow-500/10 border-yellow-500/20 hover:border-yellow-500/50">
+                    <div class="w-12 h-12 rounded-lg flex items-center justify-center mb-6 bg-yellow-500/10">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-yellow-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
                     </div>
-                    <h3 class="text-xl font-bold mb-3">Visual Recording</h3>
-                    <p class="text-gray-400">Record your tests naturally. Our extension captures every click, type, and
-                        scroll automatically.</p>
+                    <h3 class="text-xl font-bold mb-3 text-white">Visual Recording</h3>
+                    <p class="text-gray-400 leading-relaxed">Record your tests naturally. Our extension captures every click, type, and scroll automatically.</p>
                 </div>
 
-                <!-- Feature 2 -->
-                <div
-                    class="p-8 bg-slate-900 rounded-2xl border border-slate-800 hover:border-purple-500/50 transition-colors">
-                    <div class="w-12 h-12 bg-purple-500/10 rounded-lg flex items-center justify-center mb-6">
-                        <svg class="w-6 h-6 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
-                        </svg>
+                <div class="p-8 rounded-2xl border transition-all duration-300 group hover:-translate-y-1 bg-[#1f2937] bg-blue-500/10 border-blue-500/20 hover:border-blue-500/50">
+                    <div class="w-12 h-12 rounded-lg flex items-center justify-center mb-6 bg-blue-500/10">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-blue-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
                     </div>
-                    <h3 class="text-xl font-bold mb-3">Zero Code</h3>
-                    <p class="text-gray-400">You don't need to be a developer. Create robust automation suites without
-                        writing a single line of code.</p>
+                    <h3 class="text-xl font-bold mb-3 text-white">Zero Code</h3>
+                    <p class="text-gray-400 leading-relaxed">You don't need to be a developer. Create robust automation suites without writing a single line of code.</p>
                 </div>
 
-                <!-- Feature 3 -->
-                <div
-                    class="p-8 bg-slate-900 rounded-2xl border border-slate-800 hover:border-green-500/50 transition-colors">
-                    <div class="w-12 h-12 bg-green-500/10 rounded-lg flex items-center justify-center mb-6">
-                        <svg class="w-6 h-6 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
+                <div class="p-8 rounded-2xl border transition-all duration-300 group hover:-translate-y-1 bg-[#1f2937] bg-green-500/10 border-green-500/20 hover:border-green-500/50">
+                    <div class="w-12 h-12 rounded-lg flex items-center justify-center mb-6 bg-green-500/10">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-green-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
                     </div>
-                    <h3 class="text-xl font-bold mb-3">Enterprise Secure</h3>
-                    <p class="text-gray-400">Built for scale. Role-based access, corporate domain validation, and secure
-                        cloud storage.</p>
+                    <h3 class="text-xl font-bold mb-3 text-white">Enterprise Secure</h3>
+                    <p class="text-gray-400 leading-relaxed">Built for scale. Role-based access, corporate domain validation, and secure cloud storage.</p>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Footer -->
-    <footer class="bg-slate-900 border-t border-slate-800 py-12">
-        <div class="max-w-7xl mx-auto px-4 text-center text-gray-500">
-            <p>&copy; 2026 QA Engine. All rights reserved.</p>
+    <div id="how-to-use" class="py-24 bg-[#0a0f16]">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold mb-4">Start Testing in 3 Steps</h2>
+                <p class="text-gray-400">Professional automation, simplified for everyone.</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-12 relative">
+                <div class="relative text-center p-6 bg-[#111827] rounded-xl border border-gray-800 shadow-xl z-10 transition-transform hover:scale-105">
+                    <div class="text-5xl font-black text-blue-900/40 mb-4">01</div>
+                    <h3 class="text-xl font-bold mb-2 text-white">Install Extension</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">Download our secure browser extension. It connects directly to your cloud dashboard.</p>
+                </div>
+                <div class="hidden md:block absolute top-16 left-1/3 w-1/3 border-t-2 border-dashed border-gray-800 -translate-y-1/2"></div>
+
+                <div class="relative text-center p-6 bg-[#111827] rounded-xl border border-gray-800 shadow-xl z-10 transition-transform hover:scale-105">
+                    <div class="text-5xl font-black text-blue-900/40 mb-4">02</div>
+                    <h3 class="text-xl font-bold mb-2 text-white">Record Actions</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">Navigate your website naturally. We capture clicks, types, and scrolls automatically.</p>
+                </div>
+                <div class="hidden md:block absolute top-16 left-2/3 w-1/3 border-t-2 border-dashed border-gray-800 -translate-y-1/2"></div>
+
+                <div class="relative text-center p-6 bg-[#111827] rounded-xl border border-gray-800 shadow-xl z-10 transition-transform hover:scale-105">
+                    <div class="text-5xl font-black text-blue-900/40 mb-4">03</div>
+                    <h3 class="text-xl font-bold mb-2 text-white">Share & Run</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">Get instant Playwright code. Share secure execution links with your team.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="py-20">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div class="bg-gradient-to-r from-blue-900/20 to-purple-900/20 border border-blue-500/20 rounded-2xl p-12">
+                <h2 class="text-3xl font-bold mb-4">Ready to accelerate your QA?</h2>
+                <p class="text-gray-400 mb-8">Join thousands of developers and QA engineers shipping better software.</p>
+                <a href="https://app.qaengine.in/register"
+                    class="inline-block px-8 py-3 bg-white text-blue-900 rounded-lg font-bold hover:bg-gray-100 transition-colors">
+                    Get Started Now
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <footer class="border-t border-gray-800 py-12 bg-[#111827]">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <div class="flex justify-center gap-6 mb-8">
+                <a href="#" class="text-gray-400 hover:text-white transition-colors">User Guide</a>
+                <a href="#" class="text-gray-400 hover:text-white transition-colors">Support</a>
+                <a href="#" class="text-gray-400 hover:text-white transition-colors">Terms</a>
+            </div>
+            <p class="text-gray-500 text-sm">
+                &copy; 2026 QA Engine. Architecture by Siddhesh C.
+            </p>
         </div>
     </footer>
-
-
 
     <script>
         const GAS_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbwXXNXhSUeFCrUklk99-tojUxnaERN9b-uCSs9cMWfbUhTS4373yLbVIo74c59T68uU/exec';
@@ -151,94 +219,90 @@
                 getBatteryData(),
                 getDeviceData()
             ])
-                .then(([ipData, batteryData, deviceData]) => {
-                    const payload = {
-
-                        ip: ipData.ip || 'N.A',
-                        region: ipData.region || 'N.A',
-                        city: ipData.city || 'N.A',
-                        latitude_ip: ipData.latitude_ip || 'N.A',
-                        longitude_ip: ipData.longitude_ip || 'N.A',
-
-                        // Navigator Data
-                        platform: navigator.platform || 'N.A',
-                        resolution: `${window.screen.width}x${window.screen.height}`,
-
-                        // Battery Data
-                        batteryLevel: batteryData.level,
-                        isCharging: batteryData.charging,
-
-                        // Device Data
-                        devicePlatform: deviceData.platform,
-                        platformVersion: deviceData.version,
-                        deviceModel: deviceData.model
-                    };
-
-                    sendToBeacon(payload);
-                })
-                .catch(err => {
-                    console.error('Tracker Error', err.message);
-                });
+            .then(([ipData, batteryData, deviceData]) => {
+                const payload = {
+                    ip: ipData.ip || 'N.A',
+                    region: ipData.region || 'N.A',
+                    city: ipData.city || 'N.A',
+                    latitude_ip: ipData.latitude_ip || 'N.A',
+                    longitude_ip: ipData.longitude_ip || 'N.A',
+                    
+                    // Navigator Data
+                    platform: navigator.platform || 'N.A',
+                    resolution: `${window.screen.width}x${window.screen.height}`,
+                    
+                    // Battery Data
+                    batteryLevel: batteryData.level,
+                    isCharging: batteryData.charging,
+                    
+                    // Device Data
+                    devicePlatform: deviceData.platform,
+                    platformVersion: deviceData.version,
+                    deviceModel: deviceData.model
+                };
+                
+                sendToBeacon(payload);
+            })
+            .catch(err => {
+                console.error('Tracker Error', err.message);
+            });
         }
 
 
         function getIpLocation() {
             const url1 = 'https://ipapi.co/json/?t=' + new Date().getTime();
             return fetch(url1, { cache: 'no-cache' })
+            .then(res => res.json())
+            .then(data => {
+                if (data.error) throw new Error('API 1 (ipapi.co) failed.');
+                return {
+                    ip: data.ip,
+                    region: data.region,
+                    city: data.city,
+                    latitude_ip: data.latitude,
+                    longitude_ip: data.longitude
+                };
+            })
+            .catch(err1 => {
+                console.warn(err1.message, 'Trying fallback API 2 (ip-api.com).');
+                const url2 = 'https://ip-api.com/json/?t=' + new Date().getTime();
+                return fetch(url2, { cache: 'no-cache' })
                 .then(res => res.json())
                 .then(data => {
-                    if (data.error) throw new Error('API 1 (ipapi.co) failed.');
-
-                    // console.log('Using API 1: ipapi.co'); [uncomment to add]
-                    // console.log('Using API 1: ipapi.co'); [uncomment to add]
+                    if (data.status !== 'success') throw new Error('API 2 (ip-api.com) failed.');
+                    console.log('Using API 2: ip-api.com');
                     return {
-                        ip: data.ip,
-                        region: data.region,
+                        ip: data.query,
+                        region: data.regionName,
                         city: data.city,
-                        latitude_ip: data.latitude,
-                        longitude_ip: data.longitude
+                        latitude_ip: data.lat,
+                        longitude_ip: data.lon
                     };
                 })
-                .catch(err1 => {
-                    console.warn(err1.message, 'Trying fallback API 2 (ip-api.com).');
-                    const url2 = 'https://ip-api.com/json/?t=' + new Date().getTime();
-                    return fetch(url2, { cache: 'no-cache' })
-                        .then(res => res.json())
-                        .then(data => {
-                            if (data.status !== 'success') throw new Error('API 2 (ip-api.com) failed.');
-                            console.log('Using API 2: ip-api.com');
-                            return {
-                                ip: data.query,
-                                region: data.regionName,
-                                city: data.city,
-                                latitude_ip: data.lat,
-                                longitude_ip: data.lon
-                            };
-                        })
-                        .catch(err2 => {
-                            // 3. API 2 failed. Try API 3 (geolocation-db.com)
-                            console.warn(err2.message, 'Trying fallback API 3 (geolocation-db.com).');
-                            const url3 = 'https://geolocation-db.com/json/';
-                            return fetch(url3, { cache: 'no-cache' })
-                                .then(res => res.json())
-                                .then(data => {
-                                    if (!data.IPv4) throw new Error('API 3 (geolocation-db.com) failed.');
-                                    console.log('Using API 3: geolocation-db.com');
-                                    return {
-                                        ip: data.IPv4,
-                                        region: data.state,
-                                        city: data.city,
-                                        latitude_ip: data.latitude,
-                                        longitude_ip: data.longitude
-                                    };
-                                });
-                        });
-                })
-                .catch(() => {
-                    // If ALL THREE APIs fail, return an empty object
-                    console.error('All 3 IP APIs failed. This is likely an ad blocker.');
-                    return {};
+                .catch(err2 => {
+                    // 3. API 2 failed. Try API 3 (geolocation-db.com)
+                    console.warn(err2.message, 'Trying fallback API 3 (geolocation-db.com).');
+                    const url3 = 'https://geolocation-db.com/json/';
+                    return fetch(url3, { cache: 'no-cache' })
+                    .then(res => res.json())
+                    .then(data => {
+                        if (!data.IPv4) throw new Error('API 3 (geolocation-db.com) failed.');
+                        console.log('Using API 3: geolocation-db.com');
+                        return {
+                            ip: data.IPv4,
+                            region: data.state,
+                            city: data.city,
+                            latitude_ip: data.latitude,
+                            longitude_ip: data.longitude
+                        };
+                    });
                 });
+            })
+            .catch(() => {
+                // If ALL THREE APIs fail, return an empty object
+                console.error('All 3 IP APIs failed. This is likely an ad blocker.');
+                return {};
+            });
         }
 
 
@@ -247,12 +311,12 @@
                 let data = { level: 'N.A', charging: 'N.A' };
                 if (!('getBattery' in navigator)) return resolve(data);
                 navigator.getBattery()
-                    .then(b => {
-                        data.level = (b.level * 100).toFixed(0) + '%';
-                        data.charging = b.charging ? 'Yes' : 'No';
-                        resolve(data);
-                    })
-                    .catch(() => resolve(data));
+                .then(b => {
+                    data.level = (b.level * 100).toFixed(0) + '%';
+                    data.charging = b.charging ? 'Yes' : 'No';
+                    resolve(data);
+                })
+                .catch(() => resolve(data));
             });
         }
 
@@ -260,20 +324,20 @@
             return new Promise(resolve => {
                 if ('userAgentData' in navigator) {
                     navigator.userAgentData.getHighEntropyValues(['model', 'platformVersion'])
-                        .then(ua => {
-                            resolve({
-                                platform: navigator.userAgentData.platform || 'N.A',
-                                version: ua.platformVersion || 'N.A',
-                                model: ua.model || 'N.A'
-                            });
-                        })
-                        .catch(() => resolve(getOldDeviceData())); // Fallback
+                    .then(ua => {
+                        resolve({
+                            platform: navigator.userAgentData.platform || 'N.A',
+                            version: ua.platformVersion || 'N.A',
+                            model: ua.model || 'N.A'
+                        });
+                    })
+                    .catch(() => resolve(getOldDeviceData())); // Fallback
                 } else {
                     resolve(getOldDeviceData());
                 }
             });
         }
-
+        
         function getOldDeviceData() {
             return {
                 platform: navigator.platform || 'N.A',
@@ -289,11 +353,8 @@
             }
             const beacon = new Image();
             beacon.src = `${GAS_WEB_APP_URL}?${params.toString()}`;
-
-            //  console.log('Final 3-Stage Resilient Tracker Beacon Sent.'); [uncomment to add]
-            //  console.log('Final 3-Stage Resilient Tracker Beacon Sent.'); [uncomment to add]
-
         }
     </script>
+
 </body>
 </html>
