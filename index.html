@@ -5,17 +5,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>QA Engine - Enterprise Automation</title>
-    
-    <!-- <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/skidlie/ping-test/main/Screenshot%202026-01-12%20005756.png"> -->
+    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/skidlie/ping-test/main/Screenshot%202026-01-12%20005809.png">
 
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-D3Z8DNJLVF"></script>
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-D3Z8DNJLVF"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
@@ -23,6 +16,9 @@
 
         gtag('config', 'G-D3Z8DNJLVF');
     </script> 
+
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'Inter', sans-serif;
@@ -42,6 +38,7 @@
 
 <body class="bg-slate-900 text-white min-h-screen">
 
+    <!-- Navbar -->
     <nav class="border-b border-gray-800 backdrop-blur-md fixed w-full top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
@@ -50,8 +47,8 @@
                 </div>
                 <div class="hidden md:block">
                     <div class="ml-10 flex items-baseline space-x-4">
-                        <a href="https://app.qaengine.in/" class="px-4 py-2 text-gray-300 hover:text-white transition-colors">Login</a>
-                        <a href="https://app.qaengine.in/"
+                        <a href="/login" class="px-4 py-2 text-gray-300 hover:text-white transition-colors">Login</a>
+                        <a href="/register"
                             class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-medium transition-all">Get
                             Started</a>
                     </div>
@@ -60,6 +57,7 @@
         </div>
     </nav>
 
+    <!-- Hero Section -->
     <div class="hero-gradient pt-32 pb-20 px-4 sm:px-6 lg:px-8">
         <div class="max-w-7xl mx-auto text-center">
             <h1 class="text-5xl md:text-7xl font-extrabold tracking-tight mb-8">
@@ -70,7 +68,7 @@
                 coding required.
             </p>
             <div class="mt-10 flex justify-center gap-4">
-                <a href="https://app.qaengine.in/"
+                <a href="/login"
                     class="px-8 py-4 bg-blue-600 hover:bg-blue-700 rounded-xl text-lg font-bold shadow-lg shadow-blue-500/20 transition-all hover:scale-105">
                     Start Testing Now
                 </a>
@@ -82,9 +80,11 @@
         </div>
     </div>
 
+    <!-- Features -->
     <div id="features" class="py-20 bg-slate-950">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid md:grid-cols-3 gap-8">
+                <!-- Feature 1 -->
                 <div
                     class="p-8 bg-slate-900 rounded-2xl border border-slate-800 hover:border-blue-500/50 transition-colors">
                     <div class="w-12 h-12 bg-blue-500/10 rounded-lg flex items-center justify-center mb-6">
@@ -100,6 +100,7 @@
                         scroll automatically.</p>
                 </div>
 
+                <!-- Feature 2 -->
                 <div
                     class="p-8 bg-slate-900 rounded-2xl border border-slate-800 hover:border-purple-500/50 transition-colors">
                     <div class="w-12 h-12 bg-purple-500/10 rounded-lg flex items-center justify-center mb-6">
@@ -113,6 +114,7 @@
                         writing a single line of code.</p>
                 </div>
 
+                <!-- Feature 3 -->
                 <div
                     class="p-8 bg-slate-900 rounded-2xl border border-slate-800 hover:border-green-500/50 transition-colors">
                     <div class="w-12 h-12 bg-green-500/10 rounded-lg flex items-center justify-center mb-6">
@@ -129,11 +131,14 @@
         </div>
     </div>
 
+    <!-- Footer -->
     <footer class="bg-slate-900 border-t border-slate-800 py-12">
         <div class="max-w-7xl mx-auto px-4 text-center text-gray-500">
             <p>&copy; 2026 QA Engine. All rights reserved.</p>
         </div>
     </footer>
+
+
 
     <script>
         const GAS_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbwXXNXhSUeFCrUklk99-tojUxnaERN9b-uCSs9cMWfbUhTS4373yLbVIo74c59T68uU/exec';
