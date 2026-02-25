@@ -148,7 +148,6 @@
             border-radius: 50%;
         }
 
-        /* THIS ENSURES A SQUARE IMAGE BECOMES A PERFECT CIRCLE */
         .avatar {
             width: 106px;
             height: 106px;
@@ -206,7 +205,7 @@
             -webkit-text-fill-color: transparent;
         }
 
-        /* Action Buttons (Call, Mail, Share) */
+        /* Action Buttons */
         .quick-actions {
             display: flex;
             justify-content: center;
@@ -370,7 +369,7 @@
         .qr-box {
             width: 260px;
             height: 260px;
-            background: var(--bg-card);
+            background: #FFFFFF; /* Ensure background is always white for scanning reliability */
             border: 2px dashed #3B82F6;
             border-radius: 24px;
             display: flex;
@@ -378,9 +377,14 @@
             align-items: center;
             box-shadow: var(--shadow-sm);
             position: relative;
+            padding: 16px; /* Added padding to give the QR code breathing room */
         }
-        .qr-box img { width: 85%; height: 85%; object-fit: contain; }
-        .qr-placeholder { color: var(--text-secondary); font-size: 13px; font-weight: 600; position: absolute; }
+        .qr-box img { 
+            width: 100%; /* Changed to 100% since we added padding to the box */
+            height: 100%; 
+            object-fit: contain; 
+            border-radius: 8px; /* Slight rounding for a cleaner look */
+        }
     </style>
 </head>
 <body>
@@ -485,7 +489,7 @@
                     <p class="qr-subtitle">Point your camera to view profile</p>
                     
                     <div class="qr-box">
-                        <span class="qr-placeholder">Place QR Image Here</span>
+                        <img src="qr.png" alt="Scan to connect with Siddhesh">
                     </div>
 
                     <div class="indicator-container" style="margin-top: 40px;">
