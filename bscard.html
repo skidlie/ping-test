@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Siddhesh Chaube - Digital Business Card</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Light Theme Variables */
+            --bg-color: #F8FAFC;
+            --card-bg: #FFFFFF;
+            --text-main: #0F172A;
+            --text-muted: #64748B;
+            --primary-blue: #2563EB;
+            --primary-gradient: linear-gradient(135deg, #2563EB, #8B5CF6);
+            --header-gradient: linear-gradient(180deg, #2563EB 0%, #3B82F6 100%);
+            --btn-bg: #F1F5F9;
+            --border-color: #E2E8F0;
+            --shadow: 0 10px 40px -10px rgba(0,0,0,0.08);
+            --verified-color: #3B82F6;
+        }
+
+        [data-theme="dark"] {
+            /* Dark Theme Variables */
+            --bg-color: #0B0F19;
+            --card-bg: #111827;
+            --text-main: #F8FAFC;
+            --text-muted: #94A3B8;
+            --header-gradient: linear-gradient(180deg, #1E3A8A 0%, #111827 100%);
+            --btn-bg: #1F2937;
+            --border-color: #374151;
+            --shadow: 0 10px 40px -10px rgba(0,0,0,0.5);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+            transition: background-color 0.3s ease;
+        }
+
+        /* App Container constraints */
+        .app-container {
+            width: 100%;
+            max-width: 420px;
+            height: 100vh;
+            max-height: 900px;
+            background-color: var(--card-bg);
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: background-color 0.3s ease;
+        }
+
+        @media (min-width: 421px) {
+            .app-container {
+                height: 90vh;
+                border-radius: 40px;
+                border: 8px solid #000;
+            }
+        }
+
+        /* Swipe Track */
+        .swipe-track {
+            display: flex;
+            width: 200%;
+            height: 100%;
+            transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        /* Individual Screens */
+        .screen {
+            width: 50%;
+            height: 100%;
+            overflow-y: auto;
+            position: relative;
+            padding-bottom: 40px;
+        }
+        
+        /* Hide scrollbar */
+        .screen::-webkit-scrollbar { display: none; }
+        .screen { -ms-overflow-style: none; scrollbar-width: none; }
+
+        /* Top Actions (Theme Toggle) */
+        .top-actions {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            z-index: 10;
+        }
+
+        .theme-toggle {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            color: #fff;
+            transition: transform 0.2s;
+        }
+        .theme-toggle:active { transform: scale(0.9); }
+
+        /* Header Gradient */
+        .header-bg {
+            height: 180px;
+            background: var(--header-gradient);
+            position: relative;
+        }
+
+        /* Profile Section */
+        .profile-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: -60px;
+            padding: 0 20px;
+            position: relative;
+        }
+
+        .avatar-container {
+            position: relative;
+        }
+
+        .avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 4px solid var(--card-bg);
+            object-fit: cover;
+            background-color: #E2E8F0; /* Fallback color */
+            transition: border-color 0.3s ease;
+        }
+
+        .verified-badge {
+            position: absolute;
+            bottom: 5px;
+            right: 5px;
+            width: 32px;
+            height: 32px;
+            background: var(--card-bg);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2px;
+        }
+        .verified-badge svg {
+            width: 100%;
+            height: 100%;
+            fill: var(--verified-color);
+        }
+
+        /* Text Info */
+        .name {
+            font-size: 26px;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-top: 15px;
+        }
+
+        .title {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-muted);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-top: 5px;
+        }
+
+        .tagline {
+            margin-top: 12px;
+            padding: 8px 16px;
+            background: var(--btn-bg);
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 14px;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            border: 1px solid var(--border-color);
+        }
+
+        /* Quick Action Buttons */
+        .action-row {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 30px;
+            padding: 0 20px;
+        }
+
+        .action-btn-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .action-icon {
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            background-color: var(--btn-bg);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--text-main);
+            transition: transform 0.2s, background-color 0.3s;
+            border: 1px solid var(--border-color);
+        }
+
+        .action-btn-wrapper:active .action-icon { transform: scale(0.95); }
+        
+        .action-icon svg { width: 24px; height: 24px; stroke: currentColor; fill: none; stroke-width: 2; }
+        .action-text { font-size: 13px; color: var(--text-muted); font-weight: 500; }
+
+        /* Links Section */
+        .links-section {
+            margin-top: 30px;
+            padding: 0 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .link-card {
+            display: flex;
+            align-items: center;
+            padding: 16px;
+            background-color: var(--btn-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            text-decoration: none;
+            transition: transform 0.2s;
+        }
+
+        .link-card:active { transform: scale(0.98); }
+
+        .link-icon-wrapper {
+            width: 45px;
+            height: 45px;
+            border-radius: 12px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 15px;
+        }
+
+        /* QA Engine Custom Icon */
+        .qa-icon-wrapper {
+            background-color: #2563EB;
+            color: white;
+            font-weight: bold;
+            font-size: 22px;
+        }
+
+        .folder-icon-wrapper {
+            background-color: #F3E8FF;
+            color: #9333EA;
+        }
+        [data-theme="dark"] .folder-icon-wrapper { background-color: #3B0764; color: #D8B4FE; }
+        .folder-icon-wrapper svg { width: 22px; height: 22px; fill: currentColor; }
+
+        .link-text { flex-grow: 1; }
+        .link-title { font-size: 15px; font-weight: 600; color: var(--text-main); margin-bottom: 2px; }
+        .link-subtitle { font-size: 13px; color: var(--text-muted); }
+        
+        .link-arrow { color: var(--text-muted); }
+        .link-arrow svg { width: 20px; height: 20px; stroke: currentColor; stroke-width: 2; }
+
+        /* Save Contact Button */
+        .save-btn {
+            margin: 30px 20px 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            background: var(--primary-gradient);
+            color: white;
+            padding: 18px;
+            border-radius: 16px;
+            font-size: 16px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: opacity 0.2s, transform 0.2s;
+            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
+        }
+        .save-btn:active { transform: scale(0.98); opacity: 0.9; }
+        .save-btn svg { width: 20px; height: 20px; fill: currentColor; }
+
+        /* Footer */
+        .footer {
+            margin-top: 30px;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-muted);
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+        .footer-q {
+            background: #64748B;
+            color: white;
+            width: 18px;
+            height: 18px;
+            border-radius: 4px;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 10px;
+        }
+
+        /* --- QR Code Screen Styles --- */
+        .qr-screen-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            padding: 20px;
+        }
+        
+        .qr-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .qr-header h2 { color: var(--text-main); font-size: 24px; margin-bottom: 10px; }
+        .qr-header p { color: var(--text-muted); font-size: 14px; }
+
+        .qr-container {
+            width: 280px;
+            height: 280px;
+            background: var(--btn-bg);
+            border: 2px dashed var(--primary-blue);
+            border-radius: 24px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 0 30px rgba(37, 99, 235, 0.1);
+        }
+        
+        .qr-container img {
+            width: 90%;
+            height: 90%;
+            object-fit: contain;
+            border-radius: 16px;
+        }
+
+        .qr-placeholder-text {
+            color: var(--text-muted);
+            font-size: 14px;
+            font-weight: 500;
+            position: absolute;
+        }
+
+        .back-hint {
+            margin-top: 40px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-muted);
+            font-size: 14px;
+            font-weight: 500;
+        }
+        .back-hint svg { width: 16px; height: 16px; stroke: currentColor; stroke-width: 2; }
+
+        /* Swipe indicator */
+        .swipe-indicator {
+            display: flex;
+            justify-content: center;
+            gap: 6px;
+            margin-top: 25px;
+        }
+        .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: var(--border-color);
+            transition: background-color 0.3s;
+        }
+        .dot.active { background-color: var(--primary-blue); }
+
+    </style>
+</head>
+<body>
+
+    <div class="app-container" id="app">
+        <div class="top-actions">
+            <div class="theme-toggle" id="themeToggle" onclick="toggleTheme()">
+                <svg id="sunIcon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+                <svg id="moonIcon" style="display:none;" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+            </div>
+        </div>
+
+        <div class="swipe-track" id="swipeTrack">
+            
+            <div class="screen" id="frontScreen">
+                <div class="header-bg"></div>
+                
+                <div class="profile-wrapper">
+                    <div class="avatar-container">
+                        <img src="YOUR_PHOTO_URL_HERE.jpg" alt="Siddhesh Chaube" class="avatar" id="profileImage">
+                        
+                        <div class="verified-badge">
+                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm-1.9 14.7L6 12.6l1.5-1.5 2.6 2.6 6.4-6.4 1.5 1.5-7.9 7.9z"/>
+                            </svg>
+                        </div>
+                    </div>
+
+                    <h1 class="name">Siddhesh Chaube</h1>
+                    <p class="title">PRODUCT DESIGNER & DEVELOPER</p>
+                    <div class="tagline">I bridge tech and business</div>
+                </div>
+
+                <div class="action-row">
+                    <a href="tel:7900118001" class="action-btn-wrapper">
+                        <div class="action-icon">
+                            <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                        </div>
+                        <span class="action-text">Call</span>
+                    </a>
+                    
+                    <a href="mailto:info@qaengine.in" class="action-btn-wrapper">
+                        <div class="action-icon">
+                            <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                        </div>
+                        <span class="action-text">Mail</span>
+                    </a>
+
+                    <div class="action-btn-wrapper" onclick="shareProfile()">
+                        <div class="action-icon">
+                            <svg viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
+                        </div>
+                        <span class="action-text">Share</span>
+                    </div>
+                </div>
+
+                <div class="links-section">
+                    <a href="https://qaengine.in" target="_blank" class="link-card">
+                        <div class="link-icon-wrapper qa-icon-wrapper">Q</div>
+                        <div class="link-text">
+                            <div class="link-title">Visit Company Website</div>
+                            <div class="link-subtitle">View our latest work</div>
+                        </div>
+                        <div class="link-arrow">
+                            <svg viewBox="0 0 24 24"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                        </div>
+                    </a>
+
+                    <a href="https://ogsiddhesh.in" target="_blank" class="link-card">
+                        <div class="link-icon-wrapper folder-icon-wrapper">
+                            <svg viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+                        </div>
+                        <div class="link-text">
+                            <div class="link-title">View Portfolio</div>
+                            <div class="link-subtitle">Explore projects & case studies</div>
+                        </div>
+                        <div class="link-arrow">
+                            <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                        </div>
+                    </a>
+                </div>
+
+                <button class="save-btn" onclick="downloadVCard()">
+                    <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                    Save Contact
+                </button>
+
+                <div class="footer">
+                    <div class="footer-q">Q</div>
+                    POWERED BY QA ENGINE
+                </div>
+                
+                <div class="swipe-indicator">
+                    <div class="dot active"></div>
+                    <div class="dot"></div>
+                </div>
+                <div style="text-align: center; font-size: 11px; color: var(--text-muted); margin-top: 5px;">Swipe for QR</div>
+            </div>
+
+            <div class="screen" id="qrScreen">
+                <div class="qr-screen-content">
+                    <div class="qr-header">
+                        <h2>Scan to Connect</h2>
+                        <p>Point your camera at the screen</p>
+                    </div>
+
+                    <div class="qr-container">
+                        <span class="qr-placeholder-text">Add QR Code Image Here</span>
+                    </div>
+
+                    <div class="back-hint">
+                        <svg viewBox="0 0 24 24" fill="none"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                        Swipe right to go back
+                    </div>
+
+                    <div class="swipe-indicator" style="margin-top: 40px;">
+                        <div class="dot"></div>
+                        <div class="dot active"></div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    <script>
+        // --- Theme Toggle Logic ---
+        function toggleTheme() {
+            const body = document.documentElement;
+            const sunIcon = document.getElementById('sunIcon');
+            const moonIcon = document.getElementById('moonIcon');
+            
+            if (body.getAttribute('data-theme') === 'dark') {
+                body.removeAttribute('data-theme');
+                sunIcon.style.display = 'block';
+                moonIcon.style.display = 'none';
+            } else {
+                body.setAttribute('data-theme', 'dark');
+                sunIcon.style.display = 'none';
+                moonIcon.style.display = 'block';
+            }
+        }
+
+        // Detect system preference on load
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            toggleTheme(); // Switch to dark if system is dark
+        }
+
+        // --- Share Logic ---
+        function shareProfile() {
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Siddhesh Chaube - QA Engine',
+                    text: 'I bridge tech and business. Check out my digital business card!',
+                    url: window.location.href, // Shares the current URL
+                }).catch(console.error);
+            } else {
+                // Fallback for browsers that don't support Web Share API
+                alert("Share feature is not supported on this browser. You can copy the URL to share.");
+            }
+        }
+
+        // --- Save Contact (vCard) Logic ---
+        function downloadVCard() {
+            // vCard string formatted with your details
+            const vcard = `BEGIN:VCARD
+VERSION:3.0
+FN:Siddhesh Chaube
+ORG:QA Engine
+TITLE:Product Designer & Developer
+TEL;TYPE=WORK,VOICE:7900118001
+EMAIL;TYPE=WORK:info@qaengine.in
+URL:https://qaengine.in
+URL:https://ogsiddhesh.in
+END:VCARD`;
+
+            const blob = new Blob([vcard], { type: "text/vcard;charset=utf-8" });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement("a");
+            link.href = url;
+            link.download = "Siddhesh_Chaube.vcf";
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
+        }
+
+        // --- Swipe Logic ---
+        const track = document.getElementById('swipeTrack');
+        let startX = 0;
+        let currentTranslate = 0;
+        let prevTranslate = 0;
+        let isDragging = false;
+        let currentIndex = 0; // 0 = Front, 1 = QR
+
+        track.addEventListener('touchstart', touchStart);
+        track.addEventListener('touchmove', touchMove);
+        track.addEventListener('touchend', touchEnd);
+
+        // For mouse testing on desktop
+        track.addEventListener('mousedown', touchStart);
+        track.addEventListener('mousemove', touchMove);
+        track.addEventListener('mouseup', touchEnd);
+        track.addEventListener('mouseleave', () => { if(isDragging) touchEnd() });
+
+        function getPositionX(event) {
+            return event.type.includes('mouse') ? event.pageX : event.touches[0].clientX;
+        }
+
+        function touchStart(event) {
+            isDragging = true;
+            startX = getPositionX(event);
+            track.style.transition = 'none'; // Remove transition while dragging
+        }
+
+        function touchMove(event) {
+            if (!isDragging) return;
+            const currentPosition = getPositionX(event);
+            const diff = currentPosition - startX;
+            // Add resistance at the edges
+            if ((currentIndex === 0 && diff > 0) || (currentIndex === 1 && diff < 0)) {
+                currentTranslate = prevTranslate + (diff * 0.2); 
+            } else {
+                currentTranslate = prevTranslate + diff;
+            }
+            track.style.transform = `translateX(${currentTranslate}px)`;
+        }
+
+        function touchEnd() {
+            isDragging = false;
+            const movedBy = currentTranslate - prevTranslate;
+            track.style.transition = 'transform 0.4s cubic-bezier(0.25, 1, 0.5, 1)';
+            
+            // Threshold to trigger swipe (e.g., 50px)
+            if (movedBy < -50 && currentIndex === 0) {
+                currentIndex = 1; // Swipe left -> Go to QR
+            } else if (movedBy > 50 && currentIndex === 1) {
+                currentIndex = 0; // Swipe right -> Go to Front
+            }
+
+            // Calculate percentage to slide based on container width
+            const slidePercent = currentIndex * -50; 
+            track.style.transform = `translateX(${slidePercent}%)`;
+            
+            // Update prevTranslate for next calculation based on actual pixel width
+            // Using a slight delay to allow transition to finish
+            setTimeout(() => {
+                 prevTranslate = track.getBoundingClientRect().width * (slidePercent / 200);
+            }, 400);
+        }
+    </script>
+</body>
+</html>
