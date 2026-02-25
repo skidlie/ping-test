@@ -4,33 +4,34 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Siddhesh Chaube - Digital Business Card</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            /* Light Theme Variables */
-            --bg-color: #F8FAFC;
-            --card-bg: #FFFFFF;
-            --text-main: #0F172A;
-            --text-muted: #64748B;
-            --primary-blue: #2563EB;
-            --primary-gradient: linear-gradient(135deg, #2563EB, #8B5CF6);
-            --header-gradient: linear-gradient(180deg, #2563EB 0%, #3B82F6 100%);
-            --btn-bg: #F1F5F9;
-            --border-color: #E2E8F0;
-            --shadow: 0 10px 40px -10px rgba(0,0,0,0.08);
-            --verified-color: #3B82F6;
+            /* Light Theme */
+            --bg-base: #FAFAFC;
+            --bg-card: #FFFFFF;
+            --text-primary: #111827;
+            --text-secondary: #6B7280;
+            --text-gradient: linear-gradient(135deg, #2563EB, #7C3AED);
+            --border-light: #F3F4F6;
+            --shadow-sm: 0 4px 20px rgba(0, 0, 0, 0.04);
+            --icon-bg: #FFFFFF;
+            --icon-border: #E5E7EB;
+            --glow-bg: radial-gradient(circle at top, rgba(59, 130, 246, 0.15) 0%, rgba(250, 250, 252, 1) 60%);
         }
 
         [data-theme="dark"] {
-            /* Dark Theme Variables */
-            --bg-color: #0B0F19;
-            --card-bg: #111827;
-            --text-main: #F8FAFC;
-            --text-muted: #94A3B8;
-            --header-gradient: linear-gradient(180deg, #1E3A8A 0%, #111827 100%);
-            --btn-bg: #1F2937;
-            --border-color: #374151;
-            --shadow: 0 10px 40px -10px rgba(0,0,0,0.5);
+            /* Dark Theme */
+            --bg-base: #0B0E14;
+            --bg-card: #141923;
+            --text-primary: #F9FAFB;
+            --text-secondary: #9CA3AF;
+            --text-gradient: linear-gradient(135deg, #60A5FA, #A78BFA);
+            --border-light: rgba(255, 255, 255, 0.05);
+            --shadow-sm: 0 4px 20px rgba(0, 0, 0, 0.4);
+            --icon-bg: #1F2937;
+            --icon-border: rgba(255, 255, 255, 0.1);
+            --glow-bg: radial-gradient(circle at top, rgba(59, 130, 246, 0.15) 0%, rgba(11, 14, 20, 1) 60%);
         }
 
         * {
@@ -42,7 +43,7 @@
         }
 
         body {
-            background-color: var(--bg-color);
+            background-color: var(--bg-base);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -51,162 +52,170 @@
             transition: background-color 0.3s ease;
         }
 
-        /* App Container constraints */
         .app-container {
             width: 100%;
-            max-width: 420px;
+            max-width: 400px;
             height: 100vh;
-            max-height: 900px;
-            background-color: var(--card-bg);
+            max-height: 850px;
+            background: var(--glow-bg);
+            background-color: var(--bg-base);
             position: relative;
             overflow: hidden;
-            box-shadow: var(--shadow);
-            transition: background-color 0.3s ease;
+            transition: background 0.3s ease;
         }
 
-        @media (min-width: 421px) {
+        @media (min-width: 401px) {
             .app-container {
                 height: 90vh;
-                border-radius: 40px;
+                border-radius: 36px;
+                box-shadow: 0 20px 40px rgba(0,0,0,0.1);
                 border: 8px solid #000;
             }
+        }
+
+        /* Top Bar & Toggle */
+        .top-bar {
+            display: flex;
+            justify-content: flex-end;
+            padding: 24px 24px 10px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .toggle-switch {
+            width: 50px;
+            height: 28px;
+            background-color: #E5E7EB;
+            border-radius: 30px;
+            position: relative;
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
+        }
+        
+        [data-theme="dark"] .toggle-switch {
+            background-color: #2563EB;
+        }
+
+        .toggle-knob {
+            width: 22px;
+            height: 22px;
+            background-color: #FFF;
+            border-radius: 50%;
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            transition: 0.3s;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        [data-theme="dark"] .toggle-knob {
+            transform: translateX(22px);
         }
 
         /* Swipe Track */
         .swipe-track {
             display: flex;
             width: 200%;
-            height: 100%;
+            height: calc(100% - 60px);
             transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
         }
 
-        /* Individual Screens */
         .screen {
             width: 50%;
             height: 100%;
             overflow-y: auto;
-            position: relative;
             padding-bottom: 40px;
         }
-        
-        /* Hide scrollbar */
         .screen::-webkit-scrollbar { display: none; }
-        .screen { -ms-overflow-style: none; scrollbar-width: none; }
-
-        /* Top Actions (Theme Toggle) */
-        .top-actions {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            z-index: 10;
-        }
-
-        .theme-toggle {
-            background: rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255,255,255,0.3);
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            cursor: pointer;
-            color: #fff;
-            transition: transform 0.2s;
-        }
-        .theme-toggle:active { transform: scale(0.9); }
-
-        /* Header Gradient */
-        .header-bg {
-            height: 180px;
-            background: var(--header-gradient);
-            position: relative;
-        }
 
         /* Profile Section */
-        .profile-wrapper {
+        .profile-section {
             display: flex;
             flex-direction: column;
             align-items: center;
-            margin-top: -60px;
-            padding: 0 20px;
-            position: relative;
+            padding: 0 24px;
         }
 
-        .avatar-container {
+        .avatar-wrapper {
             position: relative;
+            margin-bottom: 16px;
         }
 
+        .avatar-ring {
+            padding: 4px;
+            background: linear-gradient(135deg, #3B82F6, #8B5CF6);
+            border-radius: 50%;
+        }
+
+        /* THIS ENSURES A SQUARE IMAGE BECOMES A PERFECT CIRCLE */
         .avatar {
-            width: 120px;
-            height: 120px;
+            width: 106px;
+            height: 106px;
             border-radius: 50%;
-            border: 4px solid var(--card-bg);
-            object-fit: cover;
-            background-color: #E2E8F0; /* Fallback color */
-            transition: border-color 0.3s ease;
+            object-fit: cover; 
+            border: 4px solid var(--bg-base);
+            display: block;
         }
 
-        .verified-badge {
+        .status-dot {
             position: absolute;
-            bottom: 5px;
-            right: 5px;
-            width: 32px;
-            height: 32px;
-            background: var(--card-bg);
+            bottom: 6px;
+            right: 6px;
+            width: 18px;
+            height: 18px;
+            background-color: #10B981;
+            border: 3px solid var(--bg-base);
             border-radius: 50%;
+        }
+
+        .name-row {
             display: flex;
-            justify-content: center;
             align-items: center;
-            padding: 2px;
-        }
-        .verified-badge svg {
-            width: 100%;
-            height: 100%;
-            fill: var(--verified-color);
+            gap: 6px;
         }
 
-        /* Text Info */
         .name {
-            font-size: 26px;
-            font-weight: 700;
-            color: var(--text-main);
-            margin-top: 15px;
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--text-primary);
+            letter-spacing: -0.5px;
         }
 
-        .title {
-            font-size: 12px;
-            font-weight: 600;
-            color: var(--text-muted);
-            letter-spacing: 1px;
+        .verified-icon {
+            width: 20px;
+            height: 20px;
+            fill: #2563EB;
+        }
+
+        .role {
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--text-secondary);
+            letter-spacing: 1.5px;
             text-transform: uppercase;
-            margin-top: 5px;
+            margin-top: 6px;
         }
 
         .tagline {
             margin-top: 12px;
-            padding: 8px 16px;
-            background: var(--btn-bg);
-            border-radius: 20px;
+            font-size: 15px;
             font-weight: 600;
-            font-size: 14px;
-            background: var(--primary-gradient);
+            background: var(--text-gradient);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            border: 1px solid var(--border-color);
         }
 
-        /* Quick Action Buttons */
-        .action-row {
+        /* Action Buttons (Call, Mail, Share) */
+        .quick-actions {
             display: flex;
             justify-content: center;
-            gap: 30px;
-            margin-top: 30px;
-            padding: 0 20px;
+            gap: 24px;
+            margin-top: 28px;
+            width: 100%;
         }
 
-        .action-btn-wrapper {
+        .action-item {
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -215,366 +224,311 @@
             cursor: pointer;
         }
 
-        .action-icon {
-            width: 55px;
-            height: 55px;
-            border-radius: 50%;
-            background-color: var(--btn-bg);
+        .action-btn {
+            width: 56px;
+            height: 56px;
+            background-color: var(--icon-bg);
+            border: 1px solid var(--icon-border);
+            border-radius: 16px;
             display: flex;
             justify-content: center;
             align-items: center;
-            color: var(--text-main);
-            transition: transform 0.2s, background-color 0.3s;
-            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            box-shadow: var(--shadow-sm);
+            transition: transform 0.1s;
         }
 
-        .action-btn-wrapper:active .action-icon { transform: scale(0.95); }
-        
-        .action-icon svg { width: 24px; height: 24px; stroke: currentColor; fill: none; stroke-width: 2; }
-        .action-text { font-size: 13px; color: var(--text-muted); font-weight: 500; }
+        .action-item:active .action-btn { transform: scale(0.95); }
+        .action-btn svg { width: 22px; height: 22px; stroke: currentColor; fill: none; stroke-width: 2.2; }
+        .action-label { font-size: 12px; color: var(--text-secondary); font-weight: 500; }
 
-        /* Links Section */
-        .links-section {
-            margin-top: 30px;
-            padding: 0 20px;
+        /* Link Cards Section */
+        .links-container {
+            margin-top: 32px;
+            padding: 0 24px;
             display: flex;
             flex-direction: column;
-            gap: 15px;
+            gap: 12px;
         }
 
         .link-card {
             display: flex;
             align-items: center;
-            padding: 16px;
-            background-color: var(--btn-bg);
-            border: 1px solid var(--border-color);
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-light);
             border-radius: 20px;
+            padding: 16px;
             text-decoration: none;
-            transition: transform 0.2s;
+            box-shadow: var(--shadow-sm);
+            transition: transform 0.1s;
         }
 
         .link-card:active { transform: scale(0.98); }
 
-        .link-icon-wrapper {
-            width: 45px;
-            height: 45px;
-            border-radius: 12px;
+        .link-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 14px;
             display: flex;
             justify-content: center;
             align-items: center;
-            margin-right: 15px;
+            margin-right: 16px;
+            flex-shrink: 0;
         }
 
-        /* QA Engine Custom Icon */
-        .qa-icon-wrapper {
-            background-color: #2563EB;
-            color: white;
-            font-weight: bold;
-            font-size: 22px;
-        }
+        .icon-qa { background-color: #2563EB; color: white; font-weight: 800; font-size: 22px; }
+        .icon-portfolio { background-color: #111827; color: white; }
+        [data-theme="dark"] .icon-portfolio { background-color: #8B5CF6; }
+        .icon-portfolio svg { width: 22px; height: 22px; fill: currentColor; }
 
-        .folder-icon-wrapper {
-            background-color: #F3E8FF;
-            color: #9333EA;
-        }
-        [data-theme="dark"] .folder-icon-wrapper { background-color: #3B0764; color: #D8B4FE; }
-        .folder-icon-wrapper svg { width: 22px; height: 22px; fill: currentColor; }
+        .link-content { flex-grow: 1; }
+        .link-title { font-size: 15px; font-weight: 700; color: var(--text-primary); margin-bottom: 2px; }
+        .link-sub { font-size: 12px; color: var(--text-secondary); font-weight: 500; }
 
-        .link-text { flex-grow: 1; }
-        .link-title { font-size: 15px; font-weight: 600; color: var(--text-main); margin-bottom: 2px; }
-        .link-subtitle { font-size: 13px; color: var(--text-muted); }
-        
-        .link-arrow { color: var(--text-muted); }
-        .link-arrow svg { width: 20px; height: 20px; stroke: currentColor; stroke-width: 2; }
+        .link-arrow { color: var(--text-secondary); opacity: 0.5; }
+        .link-arrow svg { width: 18px; height: 18px; stroke: currentColor; stroke-width: 2.5; stroke-linecap: round; }
 
         /* Save Contact Button */
         .save-btn {
-            margin: 30px 20px 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 10px;
-            background: var(--primary-gradient);
-            color: white;
-            padding: 18px;
-            border-radius: 16px;
-            font-size: 16px;
-            font-weight: 600;
-            border: none;
-            cursor: pointer;
-            transition: opacity 0.2s, transform 0.2s;
-            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
-        }
-        .save-btn:active { transform: scale(0.98); opacity: 0.9; }
-        .save-btn svg { width: 20px; height: 20px; fill: currentColor; }
-
-        /* Footer */
-        .footer {
-            margin-top: 30px;
-            text-align: center;
+            margin: 24px 24px 0;
             display: flex;
             justify-content: center;
             align-items: center;
             gap: 8px;
-            color: var(--text-muted);
-            font-size: 11px;
-            font-weight: 600;
-            letter-spacing: 0.5px;
-        }
-        .footer-q {
-            background: #64748B;
+            background-color: #2563EB;
             color: white;
-            width: 18px;
-            height: 18px;
-            border-radius: 4px;
-            display: inline-flex;
+            padding: 18px;
+            border-radius: 20px;
+            font-size: 15px;
+            font-weight: 700;
+            border: none;
+            cursor: pointer;
+            width: calc(100% - 48px);
+            transition: 0.2s;
+            box-shadow: 0 8px 20px rgba(37, 99, 235, 0.25);
+        }
+        .save-btn:active { transform: scale(0.98); }
+        .save-btn svg { width: 18px; height: 18px; fill: currentColor; }
+
+        /* Footer */
+        .footer {
+            margin-top: 32px;
+            display: flex;
             justify-content: center;
             align-items: center;
+            gap: 6px;
+            color: var(--text-secondary);
             font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            opacity: 0.7;
+        }
+        .footer-logo {
+            background-color: #6B7280;
+            color: white;
+            width: 16px;
+            height: 16px;
+            border-radius: 4px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 9px;
+            font-weight: 800;
         }
 
-        /* --- QR Code Screen Styles --- */
-        .qr-screen-content {
+        /* Swipe Indicators */
+        .indicator-container {
+            display: flex;
+            justify-content: center;
+            gap: 6px;
+            margin-top: 24px;
+        }
+        .dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background-color: var(--text-secondary);
+            opacity: 0.3;
+            transition: 0.3s;
+        }
+        .dot.active { opacity: 1; background-color: #2563EB; width: 16px; border-radius: 10px; }
+
+        /* QR Screen */
+        .qr-wrapper {
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             height: 100%;
-            padding: 20px;
-        }
-        
-        .qr-header {
+            padding: 24px;
             text-align: center;
-            margin-bottom: 40px;
         }
-        .qr-header h2 { color: var(--text-main); font-size: 24px; margin-bottom: 10px; }
-        .qr-header p { color: var(--text-muted); font-size: 14px; }
 
-        .qr-container {
-            width: 280px;
-            height: 280px;
-            background: var(--btn-bg);
-            border: 2px dashed var(--primary-blue);
+        .qr-title { font-size: 22px; font-weight: 800; color: var(--text-primary); margin-bottom: 8px; }
+        .qr-subtitle { font-size: 14px; color: var(--text-secondary); margin-bottom: 40px; }
+
+        .qr-box {
+            width: 260px;
+            height: 260px;
+            background: var(--bg-card);
+            border: 2px dashed #3B82F6;
             border-radius: 24px;
             display: flex;
             justify-content: center;
             align-items: center;
+            box-shadow: var(--shadow-sm);
             position: relative;
-            overflow: hidden;
-            box-shadow: 0 0 30px rgba(37, 99, 235, 0.1);
         }
-        
-        .qr-container img {
-            width: 90%;
-            height: 90%;
-            object-fit: contain;
-            border-radius: 16px;
-        }
-
-        .qr-placeholder-text {
-            color: var(--text-muted);
-            font-size: 14px;
-            font-weight: 500;
-            position: absolute;
-        }
-
-        .back-hint {
-            margin-top: 40px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            color: var(--text-muted);
-            font-size: 14px;
-            font-weight: 500;
-        }
-        .back-hint svg { width: 16px; height: 16px; stroke: currentColor; stroke-width: 2; }
-
-        /* Swipe indicator */
-        .swipe-indicator {
-            display: flex;
-            justify-content: center;
-            gap: 6px;
-            margin-top: 25px;
-        }
-        .dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background-color: var(--border-color);
-            transition: background-color 0.3s;
-        }
-        .dot.active { background-color: var(--primary-blue); }
-
+        .qr-box img { width: 85%; height: 85%; object-fit: contain; }
+        .qr-placeholder { color: var(--text-secondary); font-size: 13px; font-weight: 600; position: absolute; }
     </style>
 </head>
 <body>
 
-    <div class="app-container" id="app">
-        <div class="top-actions">
-            <div class="theme-toggle" id="themeToggle" onclick="toggleTheme()">
-                <svg id="sunIcon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
-                <svg id="moonIcon" style="display:none;" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+    <div class="app-container">
+        
+        <div class="top-bar">
+            <div class="toggle-switch" onclick="toggleTheme()">
+                <div class="toggle-knob"></div>
             </div>
         </div>
 
         <div class="swipe-track" id="swipeTrack">
             
-            <div class="screen" id="frontScreen">
-                <div class="header-bg"></div>
-                
-                <div class="profile-wrapper">
-                    <div class="avatar-container">
-                        <img src="YOUR_PHOTO_URL_HERE.jpg" alt="Siddhesh Chaube" class="avatar" id="profileImage">
-                        
-                        <div class="verified-badge">
-                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm-1.9 14.7L6 12.6l1.5-1.5 2.6 2.6 6.4-6.4 1.5 1.5-7.9 7.9z"/>
-                            </svg>
+            <div class="screen">
+                <div class="profile-section">
+                    
+                    <div class="avatar-wrapper">
+                        <div class="avatar-ring">
+                            <img src="YOUR_PHOTO.jpg" alt="Siddhesh Chaube" class="avatar">
                         </div>
+                        <div class="status-dot"></div>
                     </div>
 
-                    <h1 class="name">Siddhesh Chaube</h1>
-                    <p class="title">PRODUCT DESIGNER & DEVELOPER</p>
+                    <div class="name-row">
+                        <h1 class="name">Siddhesh Chaube</h1>
+                        <svg class="verified-icon" viewBox="0 0 24 24">
+                            <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm-1.9 14.7L6 12.6l1.5-1.5 2.6 2.6 6.4-6.4 1.5 1.5-7.9 7.9z"/>
+                        </svg>
+                    </div>
+
+                    <div class="role">CO-FOUNDER</div>
                     <div class="tagline">I bridge tech and business</div>
                 </div>
 
-                <div class="action-row">
-                    <a href="tel:7900118001" class="action-btn-wrapper">
-                        <div class="action-icon">
+                <div class="quick-actions">
+                    <a href="tel:7900118001" class="action-item">
+                        <div class="action-btn">
                             <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
                         </div>
-                        <span class="action-text">Call</span>
+                        <span class="action-label">Call</span>
                     </a>
-                    
-                    <a href="mailto:info@qaengine.in" class="action-btn-wrapper">
-                        <div class="action-icon">
+                    <a href="mailto:info@qaengine.in" class="action-item">
+                        <div class="action-btn">
                             <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
                         </div>
-                        <span class="action-text">Mail</span>
+                        <span class="action-label">Mail</span>
                     </a>
-
-                    <div class="action-btn-wrapper" onclick="shareProfile()">
-                        <div class="action-icon">
-                            <svg viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
+                    <div class="action-item" onclick="shareProfile()">
+                        <div class="action-btn">
+                            <svg viewBox="0 0 24 24"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path><polyline points="16 6 12 2 8 6"></polyline><line x1="12" y1="2" x2="12" y2="15"></line></svg>
                         </div>
-                        <span class="action-text">Share</span>
+                        <span class="action-label">Share</span>
                     </div>
                 </div>
 
-                <div class="links-section">
+                <div class="links-container">
                     <a href="https://qaengine.in" target="_blank" class="link-card">
-                        <div class="link-icon-wrapper qa-icon-wrapper">Q</div>
-                        <div class="link-text">
-                            <div class="link-title">Visit Company Website</div>
-                            <div class="link-subtitle">View our latest work</div>
+                        <div class="link-icon icon-qa">Q</div>
+                        <div class="link-content">
+                            <div class="link-title">Explore the Infrastructure</div>
+                            <div class="link-sub">QA Engine Core</div>
                         </div>
                         <div class="link-arrow">
-                            <svg viewBox="0 0 24 24"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                            <svg viewBox="0 0 24 24" fill="none"><line x1="9" y1="18" x2="15" y2="12"></line><line x1="9" y1="6" x2="15" y2="12"></line></svg>
                         </div>
                     </a>
 
                     <a href="https://ogsiddhesh.in" target="_blank" class="link-card">
-                        <div class="link-icon-wrapper folder-icon-wrapper">
+                        <div class="link-icon icon-portfolio">
                             <svg viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
                         </div>
-                        <div class="link-text">
+                        <div class="link-content">
                             <div class="link-title">View Portfolio</div>
-                            <div class="link-subtitle">Explore projects & case studies</div>
+                            <div class="link-sub">Featured Case Studies</div>
                         </div>
                         <div class="link-arrow">
-                            <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                            <svg viewBox="0 0 24 24" fill="none"><line x1="9" y1="18" x2="15" y2="12"></line><line x1="9" y1="6" x2="15" y2="12"></line></svg>
                         </div>
                     </a>
                 </div>
 
                 <button class="save-btn" onclick="downloadVCard()">
-                    <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                    <svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><line x1="20" y1="8" x2="20" y2="14"></line><line x1="23" y1="11" x2="17" y2="11"></line></svg>
                     Save Contact
                 </button>
 
                 <div class="footer">
-                    <div class="footer-q">Q</div>
+                    <div class="footer-logo">Q</div>
                     POWERED BY QA ENGINE
                 </div>
-                
-                <div class="swipe-indicator">
+
+                <div class="indicator-container">
                     <div class="dot active"></div>
                     <div class="dot"></div>
                 </div>
-                <div style="text-align: center; font-size: 11px; color: var(--text-muted); margin-top: 5px;">Swipe for QR</div>
             </div>
 
-            <div class="screen" id="qrScreen">
-                <div class="qr-screen-content">
-                    <div class="qr-header">
-                        <h2>Scan to Connect</h2>
-                        <p>Point your camera at the screen</p>
+            <div class="screen">
+                <div class="qr-wrapper">
+                    <h2 class="qr-title">Scan to Connect</h2>
+                    <p class="qr-subtitle">Point your camera to view profile</p>
+                    
+                    <div class="qr-box">
+                        <span class="qr-placeholder">Place QR Image Here</span>
                     </div>
 
-                    <div class="qr-container">
-                        <span class="qr-placeholder-text">Add QR Code Image Here</span>
-                    </div>
-
-                    <div class="back-hint">
-                        <svg viewBox="0 0 24 24" fill="none"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
-                        Swipe right to go back
-                    </div>
-
-                    <div class="swipe-indicator" style="margin-top: 40px;">
+                    <div class="indicator-container" style="margin-top: 40px;">
                         <div class="dot"></div>
                         <div class="dot active"></div>
                     </div>
                 </div>
             </div>
-            
         </div>
     </div>
 
     <script>
-        // --- Theme Toggle Logic ---
+        // --- Theme Logic ---
         function toggleTheme() {
             const body = document.documentElement;
-            const sunIcon = document.getElementById('sunIcon');
-            const moonIcon = document.getElementById('moonIcon');
-            
             if (body.getAttribute('data-theme') === 'dark') {
                 body.removeAttribute('data-theme');
-                sunIcon.style.display = 'block';
-                moonIcon.style.display = 'none';
             } else {
                 body.setAttribute('data-theme', 'dark');
-                sunIcon.style.display = 'none';
-                moonIcon.style.display = 'block';
             }
         }
-
-        // Detect system preference on load
-        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-            toggleTheme(); // Switch to dark if system is dark
-        }
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) toggleTheme();
 
         // --- Share Logic ---
         function shareProfile() {
             if (navigator.share) {
                 navigator.share({
-                    title: 'Siddhesh Chaube - QA Engine',
-                    text: 'I bridge tech and business. Check out my digital business card!',
-                    url: window.location.href, // Shares the current URL
+                    title: 'Siddhesh Chaube',
+                    text: 'I bridge tech and business. Check out my profile!',
+                    url: window.location.href,
                 }).catch(console.error);
             } else {
-                // Fallback for browsers that don't support Web Share API
-                alert("Share feature is not supported on this browser. You can copy the URL to share.");
+                alert("Share feature is not supported on this browser.");
             }
         }
 
-        // --- Save Contact (vCard) Logic ---
+        // --- vCard Logic ---
         function downloadVCard() {
-            // vCard string formatted with your details
             const vcard = `BEGIN:VCARD
 VERSION:3.0
 FN:Siddhesh Chaube
 ORG:QA Engine
-TITLE:Product Designer & Developer
+TITLE:Co-Founder
 TEL;TYPE=WORK,VOICE:7900118001
 EMAIL;TYPE=WORK:info@qaengine.in
 URL:https://qaengine.in
@@ -589,72 +543,33 @@ END:VCARD`;
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
-            URL.revokeObjectURL(url);
         }
 
         // --- Swipe Logic ---
         const track = document.getElementById('swipeTrack');
-        let startX = 0;
-        let currentTranslate = 0;
-        let prevTranslate = 0;
-        let isDragging = false;
-        let currentIndex = 0; // 0 = Front, 1 = QR
+        let startX = 0, currentTranslate = 0, prevTranslate = 0, isDragging = false, currentIndex = 0;
 
-        track.addEventListener('touchstart', touchStart);
-        track.addEventListener('touchmove', touchMove);
-        track.addEventListener('touchend', touchEnd);
-
-        // For mouse testing on desktop
-        track.addEventListener('mousedown', touchStart);
-        track.addEventListener('mousemove', touchMove);
-        track.addEventListener('mouseup', touchEnd);
-        track.addEventListener('mouseleave', () => { if(isDragging) touchEnd() });
-
-        function getPositionX(event) {
-            return event.type.includes('mouse') ? event.pageX : event.touches[0].clientX;
-        }
-
-        function touchStart(event) {
-            isDragging = true;
-            startX = getPositionX(event);
-            track.style.transition = 'none'; // Remove transition while dragging
-        }
-
-        function touchMove(event) {
+        const touchStart = (e) => { isDragging = true; startX = e.type.includes('mouse') ? e.pageX : e.touches[0].clientX; track.style.transition = 'none'; }
+        const touchMove = (e) => {
             if (!isDragging) return;
-            const currentPosition = getPositionX(event);
+            const currentPosition = e.type.includes('mouse') ? e.pageX : e.touches[0].clientX;
             const diff = currentPosition - startX;
-            // Add resistance at the edges
-            if ((currentIndex === 0 && diff > 0) || (currentIndex === 1 && diff < 0)) {
-                currentTranslate = prevTranslate + (diff * 0.2); 
-            } else {
-                currentTranslate = prevTranslate + diff;
-            }
+            currentTranslate = prevTranslate + ((currentIndex === 0 && diff > 0) || (currentIndex === 1 && diff < 0) ? diff * 0.2 : diff);
             track.style.transform = `translateX(${currentTranslate}px)`;
         }
-
-        function touchEnd() {
+        const touchEnd = () => {
             isDragging = false;
             const movedBy = currentTranslate - prevTranslate;
             track.style.transition = 'transform 0.4s cubic-bezier(0.25, 1, 0.5, 1)';
-            
-            // Threshold to trigger swipe (e.g., 50px)
-            if (movedBy < -50 && currentIndex === 0) {
-                currentIndex = 1; // Swipe left -> Go to QR
-            } else if (movedBy > 50 && currentIndex === 1) {
-                currentIndex = 0; // Swipe right -> Go to Front
-            }
-
-            // Calculate percentage to slide based on container width
+            if (movedBy < -50 && currentIndex === 0) currentIndex = 1;
+            else if (movedBy > 50 && currentIndex === 1) currentIndex = 0;
             const slidePercent = currentIndex * -50; 
             track.style.transform = `translateX(${slidePercent}%)`;
-            
-            // Update prevTranslate for next calculation based on actual pixel width
-            // Using a slight delay to allow transition to finish
-            setTimeout(() => {
-                 prevTranslate = track.getBoundingClientRect().width * (slidePercent / 200);
-            }, 400);
+            setTimeout(() => { prevTranslate = track.getBoundingClientRect().width * (slidePercent / 200); }, 400);
         }
+
+        track.addEventListener('touchstart', touchStart); track.addEventListener('touchmove', touchMove); track.addEventListener('touchend', touchEnd);
+        track.addEventListener('mousedown', touchStart); track.addEventListener('mousemove', touchMove); track.addEventListener('mouseup', touchEnd); track.addEventListener('mouseleave', () => { if(isDragging) touchEnd() });
     </script>
 </body>
 </html>
