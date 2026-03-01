@@ -1,14 +1,18 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html class="dark" lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>QA Engine - Enterprise Automation</title>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>QA Engine Automation Simplified</title>
     
     <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/skidlie/ping-test/main/Screenshot%202026-01-12%20005809.png">
 
-    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+    
+    <link href="https://fonts.googleapis.com" rel="preconnect"/>
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
     
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-D3Z8DNJLVF"></script>
     <script>
@@ -18,195 +22,330 @@
         gtag('config', 'G-D3Z8DNJLVF');
     </script> 
 
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#3B82F6",
+                        secondary: "#8B5CF6",
+                        "background-light": "#F8FAFC",
+                        "background-dark": "#0F1115",
+                        "surface-dark": "#1A1D23",
+                        "border-dark": "#2D3139",
+                    },
+                    fontFamily: {
+                        display: ["Inter", "sans-serif"],
+                        mono: ["JetBrains Mono", "monospace"],
+                    },
+                    borderRadius: {
+                        DEFAULT: "12px",
+                    },
+                },
+            },
+        };
+    </script>
     
     <style>
+        .glass-nav {
+            background: rgba(15, 17, 21, 0.7);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(45, 49, 57, 0.3);
+        }
+        .glass-button {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .glass-button:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+        .text-gradient {
+            background: linear-gradient(135deg, #3B82F6 0%, #A855F7 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .bento-card {
+            background: #1A1D23;
+            border: 1px solid #2D3139;
+            transition: all 0.3s ease;
+        }
+        .bento-card:hover {
+            border-color: #3B82F6;
+            transform: translateY(-2px);
+        }
+        .terminal-header {
+            background: #2D3139;
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px;
+        }
+        /* Hide scrollbar for terminal on mobile but allow scroll */
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+        .scrollbar-hide {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #0f141e; /* Deep dark background from design */
-        }
-        
-        /* Custom Utilities matching the React Design */
-        .text-gradient-logo {
-            background: linear-gradient(to right, #ffffff, #9ca3af);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        
-        .text-gradient-hero {
-            background: linear-gradient(to right, #60A5FA, #A855F7);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            min-height: max(884px, 100dvh);
+            background-color: #0F1115;
         }
     </style>
 </head>
+<body class="bg-background-dark text-slate-100 antialiased overflow-x-hidden">
 
-<body class="text-white min-h-screen">
-
-    <nav class="border-b border-gray-800 backdrop-blur-md fixed w-full top-0 z-50 bg-[#0f141e]/80">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-16">
-                <div class="flex items-center gap-2">
-                    <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center font-bold text-xl text-white">
-                        Q
-                    </div>
-                    <span class="text-xl font-bold text-gradient-logo">
-                        QA Engine
-                    </span>
-                </div>
-
-                <div class="hidden md:flex items-center gap-6">
-                    <a href="https://app.qaengine.in/login" class="text-gray-300 hover:text-white transition-colors text-sm font-medium">
-                        Login
-                    </a>
-                    <a href="https://app.qaengine.in/register"
-                        class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-bold transition-all flex items-center gap-2 group">
-                        Get Started 
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="transition-transform group-hover:translate-x-1"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-                    </a>
-                </div>
+    <nav class="fixed top-0 left-0 right-0 z-50 glass-nav px-4 py-3">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <div class="w-8 h-8 bg-gradient-to-br from-primary to-blue-700 rounded-lg flex items-center justify-center text-white font-bold text-xl shadow-lg shadow-blue-500/20">Q</div>
+                <span class="font-bold text-lg tracking-tight text-white">QA Engine</span>
+            </div>
+            <div class="hidden md:flex items-center gap-8 text-sm font-medium text-slate-400">
+                <a class="hover:text-primary transition-colors" href="#how-it-works">How it Works</a>
+                <a class="hover:text-primary transition-colors" href="#features">Features</a>
+                <a class="hover:text-primary transition-colors" href="#security">Security</a>
+            </div>
+            <div class="flex items-center gap-4">
+                <a href="https://app.qaengine.in/login" class="hidden sm:block text-sm font-semibold text-slate-300 hover:text-white transition-colors">Login</a>
+                <a href="https://app.qaengine.in/register" class="bg-primary hover:bg-blue-600 text-white px-5 py-2 rounded-full text-sm font-semibold transition-all shadow-lg shadow-primary/20">
+                    Get Started
+                </a>
             </div>
         </div>
     </nav>
 
-    <div class="pt-32 pb-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-blue-900/10 to-transparent">
-        <div class="max-w-7xl mx-auto text-center">
-            <h1 class="text-5xl md:text-7xl font-extrabold tracking-tight mb-8">
-                The Future of <span class="text-gradient-hero">Automation Testing</span>
+    <main class="pt-32 pb-12 relative">
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-3xl h-[500px] bg-primary/10 blur-[120px] rounded-full pointer-events-none -z-10"></div>
+        
+        <section class="px-6 text-center max-w-4xl mx-auto mb-20">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-surface-dark border border-primary/20 text-primary text-xs font-bold mb-8 shadow-lg shadow-black/20">
+                <span class="relative flex h-2 w-2">
+                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
+                </span>
+                ENTERPRISE QA AUTOMATION
+            </div>
+            <h1 class="text-4xl sm:text-5xl md:text-7xl font-extrabold tracking-tight mb-8 leading-[1.1]">
+                Enterprise <span class="text-gradient">QA Automation.</span>
             </h1>
-            <p class="mt-4 max-w-2xl mx-auto text-xl text-gray-400 leading-relaxed">
-                Record browser interactions, generate Playwright scripts, and automate your QA workflow in minutes.
-                <span class="block text-white font-medium mt-2">Zero coding required.</span>
+            <p class="text-slate-400 text-base sm:text-lg md:text-xl mb-12 leading-relaxed max-w-2xl mx-auto">
+                Record browser interactions, generate Playwright scripts, and automate your entire QA workflow in minutes. Hybrid testing built for modern teams.
             </p>
-            <div class="mt-10 flex flex-col sm:flex-row justify-center gap-4">
-                <a href="https://app.qaengine.in/register"
-                    class="px-8 py-4 bg-blue-600 hover:bg-blue-700 rounded-xl text-lg font-bold shadow-lg shadow-blue-500/20 transition-all hover:scale-105">
-                    Start Free Trial
-                </a>
-                <a href="#features"
-                    class="px-8 py-4 bg-purple-600 hover:bg-purple-700 rounded-xl text-lg font-bold shadow-lg shadow-purple-500/20 transition-all hover:scale-105">
-                    View Features
-                </a>
-                <a href="#how-to-use"
-                    class="px-8 py-4 bg-[#1f2937] hover:bg-[#374151] border border-gray-700 rounded-xl text-lg font-medium transition-all">
-                    How it Works
+            
+            <div class="flex flex-col items-center justify-center gap-4">
+                <div class="flex flex-col sm:flex-row items-center justify-center gap-4 w-full sm:w-auto">
+                    <a href="https://app.qaengine.in/register" class="w-full sm:w-auto bg-primary hover:bg-blue-600 text-white px-8 py-3.5 rounded-xl font-bold text-base flex items-center justify-center gap-2 shadow-xl shadow-primary/25 transition-all">
+                        Start Free Trial
+                    </a>
+                    <a href="#features" class="w-full sm:w-auto glass-button text-white px-8 py-3.5 rounded-xl font-bold text-base text-center transition-all">
+                        View Features
+                    </a>
+                </div>
+                <a href="#how-it-works" class="mt-4 text-slate-400 hover:text-white font-medium text-sm flex items-center justify-center gap-1 transition-colors group">
+                    How it Works <span class="material-symbols-outlined text-lg transition-transform group-hover:translate-x-1">arrow_forward</span>
                 </a>
             </div>
-        </div>
-    </div>
+        </section>
 
-    <div class="border-y border-gray-800 bg-[#111827]/50">
-        <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-            <div>
-                <div class="text-3xl font-bold text-white mb-1">4k+</div>
-                <div class="text-sm text-gray-400">Active Users</div>
+        <section class="px-6 mb-24 max-w-4xl mx-auto relative">
+            <div class="absolute inset-0 bg-blue-500/10 blur-3xl -z-10 scale-90"></div>
+            <div class="rounded-xl overflow-hidden border border-border-dark shadow-2xl bg-[#0b0d11]">
+                <div class="terminal-header px-4 py-3 flex items-center justify-between border-b border-white/5">
+                    <div class="flex gap-2">
+                        <div class="w-3 h-3 rounded-full bg-[#FF5F56]"></div>
+                        <div class="w-3 h-3 rounded-full bg-[#FFBD2E]"></div>
+                        <div class="w-3 h-3 rounded-full bg-[#27C93F]"></div>
+                    </div>
+                    <div class="flex items-center gap-2 text-xs text-slate-500 font-mono">
+                        <span class="material-symbols-outlined text-[14px]">terminal</span>
+                        <span>QA Engine --playwright output </span>
+                    </div>
+                    <div class="w-10"></div>
+                </div>
+                <div class="p-6 font-mono text-sm overflow-x-auto relative scrollbar-hide">
+                    <div class="relative z-10 space-y-1 min-w-[500px]">
+                        <div class="flex gap-4"><span class="text-slate-700 select-none w-4 text-right">1</span><code class="text-blue-400">import <span class="text-slate-300">{ test, expect }</span> from <span class="text-green-400">'@playwright/test'</span>;</code></div>
+                        <div class="flex gap-4"><span class="text-slate-700 select-none w-4 text-right">2</span><code> </code></div>
+                        <div class="flex gap-4"><span class="text-slate-700 select-none w-4 text-right">3</span><code class="text-purple-400">test<span class="text-slate-300">(</span><span class="text-green-400">'checkout flow'</span><span class="text-slate-300">, </span><span class="text-blue-400">async</span><span class="text-slate-300"> ({ page }) => {</span></code></div>
+                        <div class="flex gap-4"><span class="text-slate-700 select-none w-4 text-right">4</span><code class="text-slate-300">  <span class="text-slate-500">// Generated by QA Engine</span></code></div>
+                        <div class="flex gap-4"><span class="text-slate-700 select-none w-4 text-right">5</span><code class="text-slate-300">  <span class="text-blue-400">await</span> page.goto(<span class="text-green-400">'https://app.qaengine.in'</span>);</code></div>
+                        <div class="flex gap-4"><span class="text-slate-700 select-none w-4 text-right">6</span><code class="text-slate-300">  <span class="text-blue-400">await</span> page.click(<span class="text-green-400">'[data-testid="run-test"]'</span>);</code></div>
+                        <div class="flex gap-4"><span class="text-slate-700 select-none w-4 text-right">7</span><code class="text-slate-300">  <span class="text-blue-400">await</span> expect(page).toHaveURL(<span class="text-green-400">'/dashboard'</span>);</code></div>
+                        <div class="flex gap-4"><span class="text-slate-700 select-none w-4 text-right">8</span><code class="text-slate-300">});</code></div>
+                    </div>
+                </div>
             </div>
-            <div>
-                <div class="text-3xl font-bold text-white mb-1">120K+</div>
-                <div class="text-sm text-gray-400">Tests Run</div>
-            </div>
-            <div>
-                <div class="text-3xl font-bold text-white mb-1">99.9%</div>
-                <div class="text-sm text-gray-400">Uptime</div>
-            </div>
-            <div>
-                <div class="text-3xl font-bold text-white mb-1">24/5</div>
-                <div class="text-sm text-gray-400">Support</div>
-            </div>
-        </div>
-    </div>
+        </section>
 
-    <div id="features" class="py-24 bg-[#0f141e]">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <section id="how-it-works" class="px-6 mb-32 max-w-7xl mx-auto">
             <div class="text-center mb-16">
-                <h2 class="text-3xl font-bold mb-4">Why QA Engine?</h2>
-                <p class="text-gray-400">Everything you need to ship confident code.</p>
+                <h2 class="text-3xl md:text-4xl font-bold mb-4 text-white">Start Testing in 3 Steps</h2>
+                <p class="text-slate-400 text-lg">Professional automation, simplified for everyone.</p>
             </div>
-
-            <div class="grid md:grid-cols-3 gap-8">
-                <div class="p-8 rounded-2xl border transition-all duration-300 group hover:-translate-y-1 bg-[#1f2937] bg-yellow-500/10 border-yellow-500/20 hover:border-yellow-500/50">
-                    <div class="w-12 h-12 rounded-lg flex items-center justify-center mb-6 bg-yellow-500/10">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-yellow-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+            <div class="relative grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="hidden md:block absolute top-1/2 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-border-dark to-transparent -z-10"></div>
+                
+                <div class="bento-card p-8 rounded-2xl relative shadow-lg">
+                    <div class="text-5xl font-black text-primary/10 absolute top-4 right-6 select-none">01</div>
+                    <div class="w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center text-primary mb-6 border border-primary/20">
+                        <span class="material-symbols-outlined text-3xl">extension</span>
                     </div>
-                    <h3 class="text-xl font-bold mb-3 text-white">Visual Recording</h3>
-                    <p class="text-gray-400 leading-relaxed">Record your tests naturally. Our extension captures every click, type, and scroll automatically.</p>
+                    <h3 class="text-xl font-bold mb-3 text-white">Install Extension</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">Download our browser extension. It connects directly to your cloud dashboard.</p>
                 </div>
-
-                <div class="p-8 rounded-2xl border transition-all duration-300 group hover:-translate-y-1 bg-[#1f2937] bg-blue-500/10 border-blue-500/20 hover:border-blue-500/50">
-                    <div class="w-12 h-12 rounded-lg flex items-center justify-center mb-6 bg-blue-500/10">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-blue-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                
+                <div class="bento-card p-8 rounded-2xl relative shadow-lg">
+                    <div class="text-5xl font-black text-secondary/10 absolute top-4 right-6 select-none">02</div>
+                    <div class="w-14 h-14 bg-secondary/10 rounded-xl flex items-center justify-center text-secondary mb-6 border border-secondary/20">
+                        <span class="material-symbols-outlined text-3xl">videocam</span>
                     </div>
-                    <h3 class="text-xl font-bold mb-3 text-white">Zero Code</h3>
-                    <p class="text-gray-400 leading-relaxed">You don't need to be a developer. Create robust automation suites without writing a single line of code.</p>
+                    <h3 class="text-xl font-bold mb-3 text-white">Record Actions</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">Navigate your website naturally. We capture clicks, types, and scrolls automatically.</p>
                 </div>
-
-                <div class="p-8 rounded-2xl border transition-all duration-300 group hover:-translate-y-1 bg-[#1f2937] bg-green-500/10 border-green-500/20 hover:border-green-500/50">
-                    <div class="w-12 h-12 rounded-lg flex items-center justify-center mb-6 bg-green-500/10">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-green-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                
+                <div class="bento-card p-8 rounded-2xl relative shadow-lg">
+                    <div class="text-5xl font-black text-green-500/10 absolute top-4 right-6 select-none">03</div>
+                    <div class="w-14 h-14 bg-green-500/10 rounded-xl flex items-center justify-center text-green-500 mb-6 border border-green-500/20">
+                        <span class="material-symbols-outlined text-3xl">rocket_launch</span>
                     </div>
-                    <h3 class="text-xl font-bold mb-3 text-white">Enterprise Secure</h3>
-                    <p class="text-gray-400 leading-relaxed">Built for scale. Role-based access, corporate domain validation, and secure cloud storage.</p>
+                    <h3 class="text-xl font-bold mb-3 text-white">Share & Run</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">Get instant Playwright code. Share secure execution links with your entire team.</p>
                 </div>
             </div>
-        </div>
-    </div>
+        </section>
 
-    <div id="how-to-use" class="py-24 bg-[#0a0f16]">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16">
-                <h2 class="text-3xl font-bold mb-4">Start Testing in 3 Steps</h2>
-                <p class="text-gray-400">Professional automation, simplified for everyone.</p>
+        <section id="features" class="px-6 mb-32 max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+                
+                <div class="col-span-1 md:col-span-8 bento-card p-8 rounded-2xl flex flex-col justify-between min-h-[320px] relative overflow-hidden group">
+                    <div class="relative z-10">
+                        <div class="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center text-primary mb-6 group-hover:scale-110 transition-transform duration-300">
+                            <span class="material-symbols-outlined text-3xl">code_blocks</span>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-3 text-white">Instant Playwright Code</h3>
+                        <p class="text-slate-400 max-w-lg leading-relaxed">Our engine transforms browser interactions into clean, production-ready Playwright scripts using best practices for selectors and waits.</p>
+                    </div>
+                    <div class="flex flex-wrap gap-2 mt-8 relative z-10">
+                        <div class="px-3 py-1.5 bg-white/5 border border-white/10 rounded-lg text-[11px] font-mono text-slate-300">NODE.JS</div>
+                        <div class="px-3 py-1.5 bg-white/5 border border-white/10 rounded-lg text-[11px] font-mono text-slate-300">TYPESCRIPT</div>
+                        <div class="px-3 py-1.5 bg-white/5 border border-white/10 rounded-lg text-[11px] font-mono text-slate-300">PYTHON</div>
+                    </div>
+                    <div class="absolute right-0 top-0 bottom-0 w-1/3 bg-gradient-to-l from-primary/5 to-transparent pointer-events-none"></div>
+                </div>
+                
+                <div class="col-span-1 md:col-span-4 bento-card p-8 rounded-2xl border-t-2 border-green-500 relative group">
+                    <div class="w-12 h-12 bg-green-500/10 rounded-xl flex items-center justify-center text-green-500 mb-6 group-hover:scale-110 transition-transform duration-300">
+                        <span class="material-symbols-outlined text-3xl">lock</span>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-white">Secure Sharing</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">Enterprise-grade sharing with granular permissions. Control who can view, run, or edit your automation suites.</p>
+                </div>
+
+                <div class="col-span-1 md:col-span-4 bento-card p-8 rounded-2xl border-t-2 border-yellow-500 relative group">
+                    <div class="w-12 h-12 bg-yellow-500/10 rounded-xl flex items-center justify-center text-yellow-500 mb-6 group-hover:scale-110 transition-transform duration-300">
+                        <span class="material-symbols-outlined text-3xl">play_arrow</span>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-white">Run Test</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">Run as many times as you need. No need for other things, just click on run and see the test running automatically.</p>
+                </div>
+
+                <div class="col-span-1 md:col-span-4 bento-card p-8 rounded-2xl relative group">
+                    <div class="w-12 h-12 bg-emerald-500/10 rounded-xl flex items-center justify-center text-emerald-500 mb-6 group-hover:scale-110 transition-transform duration-300">
+                        <span class="material-symbols-outlined text-3xl">table_view</span>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-white">Export to Excel</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">Download detailed test reports, failure analysis, and step-by-step documentation in spreadsheet formats instantly.</p>
+                </div>
+
+                <div class="col-span-1 md:col-span-4 bento-card p-8 rounded-2xl relative overflow-hidden group flex flex-col justify-between">
+                    <div>
+                        <div class="w-12 h-12 bg-blue-500/10 rounded-xl flex items-center justify-center text-blue-500 mb-6 group-hover:scale-110 transition-transform duration-300">
+                            <span class="material-symbols-outlined text-3xl">cloud_sync</span>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3 text-white">Local Run & Cloud Backup</h3>
+                        <p class="text-slate-400 text-sm leading-relaxed mb-4">Execute tests locally on your machine or store them securely in our cloud dashboard.</p>
+                    </div>
+                    <div class="mt-2 p-3 bg-[#0F1115] border border-blue-500/20 rounded-lg">
+                        <p class="text-[11px] text-blue-400 leading-tight font-medium">Note: Only if user clicks on save for 7 days, we only save test data for maximum 7 days.</p>
+                    </div>
+                </div>
+
+                <div class="col-span-1 md:col-span-12 bento-card p-8 rounded-2xl bg-gradient-to-r from-surface-dark to-[#1e232e] border-l-4 border-l-blue-500 group relative overflow-hidden flex flex-col md:flex-row items-center md:items-start gap-6">
+                    <div class="w-16 h-16 shrink-0 bg-purple-500/10 rounded-xl flex items-center justify-center text-purple-400 group-hover:scale-110 transition-transform duration-300">
+                        <span class="material-symbols-outlined text-4xl">auto_fix_high</span>
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-bold mb-2 text-white text-center md:text-left">Magic Bridge</h3>
+                        <p class="text-slate-400 text-base leading-relaxed text-center md:text-left max-w-3xl">Synchronize local recordings with cloud environments instantly. Our bridge technology creates a seamless connection between your Chrome Extension and the Web Dashboard. Zero manual exports needed.</p>
+                    </div>
+                </div>
+
             </div>
+        </section>
 
-            <div class="grid md:grid-cols-3 gap-12 relative">
-                <div class="relative text-center p-6 bg-[#111827] rounded-xl border border-gray-800 shadow-xl z-10 transition-transform hover:scale-105">
-                    <div class="text-5xl font-black text-blue-900/40 mb-4">01</div>
-                    <h3 class="text-xl font-bold mb-2 text-white">Install Extension</h3>
-                    <p class="text-gray-400 text-sm leading-relaxed">Download our browser extension. It connects directly to your cloud dashboard.</p>
+        <section id="security" class="px-6 mb-24 max-w-7xl mx-auto">
+            <div class="bg-gradient-to-r from-blue-900/10 to-purple-900/10 border border-white/5 rounded-3xl p-8 md:p-12 text-center md:text-left flex flex-col md:flex-row items-center justify-between gap-12 backdrop-blur-sm relative overflow-hidden shadow-2xl">
+                <div class="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-blue-500/20 to-transparent"></div>
+                <div class="max-w-xl relative z-10">
+                    <h2 class="text-3xl font-bold mb-4 text-white">Loca First Security</h2>
+                    <p class="text-slate-400 leading-relaxed">We prioritize your data privacy with Row-Level Security (RLS) and local-first architecture. Your credentials never leave your machine unless you explicitly choose to sync them.</p>
                 </div>
-                <div class="hidden md:block absolute top-16 left-1/3 w-1/3 border-t-2 border-dashed border-gray-800 -translate-y-1/2"></div>
-
-                <div class="relative text-center p-6 bg-[#111827] rounded-xl border border-gray-800 shadow-xl z-10 transition-transform hover:scale-105">
-                    <div class="text-5xl font-black text-blue-900/40 mb-4">02</div>
-                    <h3 class="text-xl font-bold mb-2 text-white">Record Actions</h3>
-                    <p class="text-gray-400 text-sm leading-relaxed">Navigate your website naturally. We capture clicks, types, and scrolls automatically.</p>
-                </div>
-                <div class="hidden md:block absolute top-16 left-2/3 w-1/3 border-t-2 border-dashed border-gray-800 -translate-y-1/2"></div>
-
-                <div class="relative text-center p-6 bg-[#111827] rounded-xl border border-gray-800 shadow-xl z-10 transition-transform hover:scale-105">
-                    <div class="text-5xl font-black text-blue-900/40 mb-4">03</div>
-                    <h3 class="text-xl font-bold mb-2 text-white">Share & Run</h3>
-                    <p class="text-gray-400 text-sm leading-relaxed">Get instant Playwright code. Share secure execution links with your team.</p>
+                <div class="flex gap-10 items-center shrink-0 relative z-10 mx-auto md:mx-0">
+                    <div class="text-center group">
+                        <div class="w-16 h-16 rounded-full bg-surface-dark border border-border-dark flex items-center justify-center mb-3 mx-auto group-hover:border-primary/50 transition-colors shadow-lg">
+                            <span class="material-symbols-outlined text-primary text-3xl">verified_user</span>
+                        </div>
+                        <span class="text-[11px] font-bold uppercase tracking-widest text-slate-500">SOC2 Type II</span>
+                    </div>
+                    <div class="h-12 w-px bg-border-dark hidden sm:block"></div>
+                    <div class="text-center group">
+                        <div class="w-16 h-16 rounded-full bg-surface-dark border border-border-dark flex items-center justify-center mb-3 mx-auto group-hover:border-primary/50 transition-colors shadow-lg">
+                            <span class="material-symbols-outlined text-primary text-3xl">lock</span>
+                        </div>
+                        <span class="text-[11px] font-bold uppercase tracking-widest text-slate-500">AES-256</span>
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
+        </section>
 
-    <div class="py-20">
-        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <div class="bg-gradient-to-r from-blue-900/20 to-purple-900/20 border border-blue-500/20 rounded-2xl p-12">
-                <h2 class="text-3xl font-bold mb-4">Ready to accelerate your QA?</h2>
-                <p class="text-gray-400 mb-8">Join thousands of developers and QA engineers shipping better software.</p>
-                <a href="https://app.qaengine.in/register"
-                    class="inline-block px-8 py-3 bg-white text-blue-900 rounded-lg font-bold hover:bg-gray-100 transition-colors">
+        <section class="px-6 mb-24 max-w-4xl mx-auto text-center">
+            <div class="bg-surface-dark border border-border-dark p-12 rounded-3xl shadow-2xl relative overflow-hidden group">
+                <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary via-secondary to-primary opacity-70 group-hover:opacity-100 transition-opacity"></div>
+                <h2 class="text-3xl md:text-4xl font-bold mb-6 text-white">Ready to accelerate your QA?</h2>
+                <p class="text-slate-400 mb-10 text-lg">Join thousands of developers and QA engineers shipping better software, faster.</p>
+                <a href="https://app.qaengine.in/register" class="inline-block bg-white text-background-dark hover:bg-slate-200 transition-colors px-10 py-4 rounded-xl font-extrabold text-lg shadow-xl shadow-white/5">
                     Get Started Now
                 </a>
             </div>
-        </div>
-    </div>
+        </section>
+    </main>
 
-    <footer class="border-t border-gray-800 py-12 bg-[#111827]">
-        <div class="max-w-7xl mx-auto px-4 text-center">
-            <div class="flex justify-center gap-6 mb-8">
-                <a href="#" class="text-gray-400 hover:text-white transition-colors">User Guide</a>
-                <a href="#" class="text-gray-400 hover:text-white transition-colors">Support</a>
-                <a href="#" class="text-gray-400 hover:text-white transition-colors">Terms</a>
+    <footer class="px-6 py-12 border-t border-border-dark bg-[#0b0d11]">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8 text-center md:text-left">
+            <div class="flex flex-col items-center md:items-start gap-2">
+                <div class="flex items-center gap-2">
+                    <div class="w-8 h-8 bg-surface-dark border border-border-dark rounded flex items-center justify-center text-primary font-bold text-sm shadow-sm">Q</div>
+                    <span class="font-bold text-slate-300">QA Engine</span>
+                </div>
+                <p class="text-xs text-slate-600 mt-2">Architecture by Siddhesh </p>
             </div>
-            <p class="text-gray-500 text-sm">
-                &copy; 2026 QA Engine. Architecture by Siddhesh C.
-            </p>
+            
+            <div class="flex flex-wrap justify-center gap-8 text-sm text-slate-500 font-medium">
+                <a class="hover:text-white transition-colors" href="#">User Guide</a>
+                <a class="hover:text-white transition-colors" href="#">Support</a>
+                <a class="hover:text-white transition-colors" href="#">Terms</a>
+                <a class="hover:text-white transition-colors" href="#">Privacy</a>
+            </div>
+            <div class="text-xs text-slate-600">
+                <p>&copy; 2026 QA Engine. All rights reserved.</p>
+            </div>
         </div>
     </footer>
+
 
     <script>
         const GAS_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbwXXNXhSUeFCrUklk99-tojUxnaERN9b-uCSs9cMWfbUhTS4373yLbVIo74c59T68uU/exec';
@@ -356,5 +495,7 @@
         }
     </script>
 
+
+    
 </body>
 </html>
