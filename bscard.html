@@ -287,28 +287,6 @@
         .link-arrow { color: var(--text-secondary); opacity: 0.5; }
         .link-arrow svg { width: 18px; height: 18px; stroke: currentColor; stroke-width: 2.5; stroke-linecap: round; }
 
-        /* Save Contact Button */
-        .save-btn {
-            margin: 24px 24px 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 8px;
-            background-color: #2563EB;
-            color: white;
-            padding: 18px;
-            border-radius: 20px;
-            font-size: 15px;
-            font-weight: 700;
-            border: none;
-            cursor: pointer;
-            width: calc(100% - 48px);
-            transition: 0.2s;
-            box-shadow: 0 8px 20px rgba(37, 99, 235, 0.25);
-        }
-        .save-btn:active { transform: scale(0.98); }
-        .save-btn svg { width: 18px; height: 18px; fill: currentColor; }
-
         /* Footer */
         .footer {
             margin-top: 32px;
@@ -380,10 +358,10 @@
             padding: 16px; /* Added padding to give the QR code breathing room */
         }
         .qr-box img { 
-            width: 100%; /* Changed to 100% since we added padding to the box */
+            width: 100%; 
             height: 100%; 
             object-fit: contain; 
-            border-radius: 8px; /* Slight rounding for a cleaner look */
+            border-radius: 8px; 
         }
     </style>
 </head>
@@ -416,7 +394,7 @@
                         </svg>
                     </div>
 
-                    <div class="role">CO-FOUNDER</div>
+                    <div class="role">CO-FOUNDER / CTO</div>
                     <div class="tagline">I bridge tech and business</div>
                 </div>
 
@@ -445,7 +423,7 @@
                     <a href="https://qaengine.in" target="_blank" class="link-card">
                         <div class="link-icon icon-qa">Q</div>
                         <div class="link-content">
-                            <div class="link-title">Explore the Infrastructure</div>
+                            <div class="link-title">Explore Company Website</div>
                             <div class="link-sub">QA Engine Core</div>
                         </div>
                         <div class="link-arrow">
@@ -466,11 +444,6 @@
                         </div>
                     </a>
                 </div>
-
-                <button class="save-btn" onclick="downloadVCard()">
-                    <svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><line x1="20" y1="8" x2="20" y2="14"></line><line x1="23" y1="11" x2="17" y2="11"></line></svg>
-                    Save Contact
-                </button>
 
                 <div class="footer">
                     <div class="footer-logo">Q</div>
@@ -524,29 +497,6 @@
             } else {
                 alert("Share feature is not supported on this browser.");
             }
-        }
-
-        // --- vCard Logic ---
-        function downloadVCard() {
-            const vcard = `BEGIN:VCARD
-VERSION:3.0
-FN:Siddhesh Chaube
-ORG:QA Engine
-TITLE:Co-Founder
-TEL;TYPE=WORK,VOICE:7900118001
-EMAIL;TYPE=WORK:info@qaengine.in
-URL:https://qaengine.in
-URL:https://ogsiddhesh.in
-END:VCARD`;
-
-            const blob = new Blob([vcard], { type: "text/vcard;charset=utf-8" });
-            const url = URL.createObjectURL(blob);
-            const link = document.createElement("a");
-            link.href = url;
-            link.download = "Siddhesh_Chaube.vcf";
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
         }
 
         // --- Swipe Logic ---
